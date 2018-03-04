@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+                   
+<mapper namespace="com.myblog.dao.pub.IPubDao">
+	
+	<insert id="recordbower" parameterType="com.myblog.entity.Blog_web_record" useGeneratedKeys="true" keyProperty="record_id">
+	INSERT into blog_web_record(record_ip,record_time,record_user,record_dervice,record_brow,record_time) 
+	value(#{record_ip},#{record_time},#{record_time},#{record_user},#{record_dervice},#{record_brow},#{record_time}) 
+	</insert>	
+</mapper>

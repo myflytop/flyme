@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myblog.dao.IBlogerDao">
+	<select id="getBloger" resultType="com.myblog.entity.Bloger">
+		select bloger_id,bloger_pas from bloger where bloger_id=#{bloger_id}
+	</select>
+    
+    <update id="updateBloger" parameterType="com.myblog.entity.Bloger">
+    update bloger set bloger_pas=#{bloger_pas} where bloger_id==#{bloger_id}
+    </update>
+	
+	<select id="getBloger_info" resultType="com.myblog.entity.Bloger_info">
+		select * from bloger_info where bloger_id=#{bloger_id}
+	</select>
+	<update id="updateBloger_info" parameterType="com.myblog.entity.Bloger_info">
+    update bloger_info
+    <trim prefix="set" suffixOverrides=",">
+    <if test="bloger_sex!=null">
+    bloger_sex=#{bloger_sex},
+    </if>
+    <if test="bloger_address!=null">
+    bloger_address=#{bloger_address},
+    </if>
+    <if test="bloger_introduce!=null">
+    bloger_introduce=#{bloger_introduce},
+    </if>
+    <if test="bloger_name!=null">
+    bloger_name=#{bloger_name},
+    </if>
+    <if test="bloger_nikename!=null">
+    bloger_nikename=#{bloger_nikename},
+    </if>
+    <if test="bloger_birthday!=null">
+    bloger_birthday=#{bloger_birthday},
+    </if>  
+    </trim> 
+    where bloger_id=#{bloger_id}
+	</update>
+	
+	<select id="getBloger_imgurl" resultType="string">
+	select bloger_imgurl from bloger_info where bloger_id=#{bloger_id}
+	</select>
+	
+	
+	<update id="updateBloger_imgurl">
+	update bloger_info set bloger_imgurl=#{bloger_imgurl} where bloger_id=#{bloger_id}
+	</update>
+	
+	<select id="getBloger_profession" resultType="string">
+	select bloger_profession from bloger_info where bloger_id=#{bloger_id}
+	</select>
+	
+	<update id="upadteBloger_profession">
+	update bloger_info set bloger_profession=#{bloger_profession} where bloger_id=#{bloger_id}
+	</update>
+	
+	<select id="getBloger_hobby" resultType="string">
+	select bloger_hobby from bloger_info where bloger_id=#{bloger_id}
+	</select>
+	
+	<update id="updateBloger_hobby">
+	update bloger_info set bloger_hobby=#{bloger_hobby} where bloger_id=#{bloger_id}
+	</update>
+	
+	<select id="getBloger_public" resultType="string" statementType="STATEMENT">
+	select ${bloger_public} from bloger_info where bloger_id=${bloger_id}
+	</select>
+	<!-- 注意：配置文件这里有一个属性statementType=”STATEMENT”，而且where后面只能${zdm} = ${value}，不能写成#{zdm} = #{value} --> 
+	<update id="updateBloger_public" statementType="STATEMENT">
+	update bloger_info set ${blogerfiled}=${bloger_public} where bloger_id=${bloger_id}
+	</update>
+</mapper>

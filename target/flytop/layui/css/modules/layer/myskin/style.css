@@ -1,0 +1,14 @@
+
+body .layui-ext-myskin .layui-layer-title{
+	background: #ffffff;
+	color: #000000;
+}
+
+body .layui-ext-myskin .layui-layer-btn{
+	color: #009688;
+}
+
+body .layui-ext-myskin .layui-layer-btn a{
+	background-color: #009688;
+}
+

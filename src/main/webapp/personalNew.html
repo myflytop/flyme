@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8" />
+<title></title>
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<link rel="stylesheet" href="layui/css/layui.css" />
+<link rel="shortcut icon" href="img/mylog.ico" type="image/x-icon">
+<link rel="stylesheet"
+	href="font-awesome-4.7.0/css/font-awesome.min.css" />
+<link rel="stylesheet" href="css/slide-unlock.css" />
+<link rel="stylesheet" href="css/public.css" />
+<style type="text/css">
+body {
+	background-color: rgb(238, 238, 238);
+	overflow-x: hidden;
+}
+
+.my-tab {
+	margin-top: 0;
+	background-color: white;
+	padding: 10px;
+	font-size: 20px;
+	line-height: 20px;
+	box-shadow: 0 2px 10px 0 rgba(0, 0, 0, .1);
+	border-radius: 0px 5px 5px 0px;
+}
+
+#userimg {
+	width: 100%;
+}
+
+#userimg>span {
+	position: relative;
+	left: -140px;
+	padding: 10px;
+	color: white;
+	background-color: rgba(102, 139, 139, 0.6);
+	overflow: hidden;
+}
+
+#userimg>img {
+	width: 200px;
+	display: inline-block;
+}
+
+#userimg>div {
+	display: inline-block;
+	overflow: hidden;
+	width: 200px;
+	height: 200px;
+	margin-right: 20px;
+}
+
+#userimg>div>span {
+	display: block;
+	width: 80px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	margin: 0 auto;
+	margin-top: 85px;
+	color: white;
+	background-color: rgba(0, 0, 0, 0.5);
+	border-radius: 5px;
+}
+
+#img2P {
+	background-repeat: no-repeat;
+	background-size: 200px 200px;
+}
+
+#userimg>div>span:hover {
+	cursor: pointer;
+}
+
+#userimg>div>img {
+	background-repeat: no-repeat;
+	background-size: 200px 200px;
+	padding: 0;
+	margin: 0;
+}
+</style>
+</head>
+
+<body ondragstart="return false">
+	<!--导航开始-->
+	<nav class="top-nav">
+		<ul class="layui-nav my-nav-style" id="main-nav"
+			lay-filter="my-top-nav" style="text-align: center;">
+			<li id="nav-login" class="layui-nav-item layui-layout-right"
+				lay-unselect="" style="margin-right: 80px;"></li>
+			<li class="layui-nav-item "><a href="indexNew.html"><i
+					class="fa fa-home fa-fw"></i>网站首页</a></li>
+			<li class="layui-nav-item"><a href="searcharticleNew.html"><i
+					class="fa fa-book fa-fw"></i>博文专栏</a></li>
+			<li class="layui-nav-item"><a href=""><i
+					class="fa fa-tags fa-fw"></i>教程专栏</a></li>
+			<li class="layui-nav-item"><a href=""><i
+					class="fa fa-download fa-fw"></i>资源分享</a></li>
+			<li class="layui-nav-item "><a href="aboutNew.html"><i
+					class="fa fa-info fa-fw"></i>关于本站</a></li>
+		</ul>
+		<a class="nav-logo" href="javascript:void(0)">WELPHEN</a> <span
+			class="nav-btn"><i class="fa fa-navicon  fa-2x fa-fw"></i></span>
+	</nav>
+	<!--导航结束-->
+
+	<!--内容区域开始-->
+	<div class="layui-row layui-col-space20 main-body">
+		<!--路径导航开始-->
+		<div class="layui-col-md10 layui-col-md-offset1">
+			<blockquote class="layui-elem-quote layui-breadcrumb sitemap">
+				<a href="home.html" title="网站首页">网站首页</a> <a><cite>个人中心</cite></a>
+			</blockquote>
+		</div>
+		<!--路径导航结束-->
+		<!-- 左边内容开始-->
+		<div class="layui-col-md7  layui-col-md-offset1 main-body-left"
+			id="main-body-left">
+			<div class="layui-row">
+				<div class="layui-col-md-od12">
+					<div class="layui-tab layui-tab-brief my-tab" style="height: auto;"
+						lay-filter="docDemoTabBrief">
+						<ul class="layui-tab-title">
+							<li class="layui-this">用户中心</li>
+						</ul>
+						<div class="layui-tab-content" style="height: auto;">
+							<div class="layui-tab-item layui-show">
+								<ul class="layui-timeline">
+									<li class="layui-timeline-item"><i
+										class="layui-icon layui-timeline-axis">&#xe63f;</i>
+										<div class="layui-timeline-content layui-text">
+											<h3 class="layui-timeline-title">基本资料</h3>
+											<form method="post" class="layui-form" id="personal">
+												<div class="layui-form-item">
+													<label for="L_email" class="layui-form-label"
+														style="width: auto;">邮箱</label>
+													<div class="layui-input-inline">
+														<input type="text" name="user_mail" required=""
+															lay-verify="email" autocomplete="off" :value="user_mail"
+															class="layui-input" :placeholder="user_mail">
+													</div>
+													<div class="layui-form-mid layui-word-aux">
+														<a href="/user/activate/"
+															style="font-size: 12px; color: #4f99cf;">重新验证邮箱</a>。
+													</div>
+												</div>
+												<div class="layui-form-item">
+													<label for="L_username" class="layui-form-label"
+														style="width: auto;">昵称</label>
+													<div class="layui-input-inline">
+														<input type="text" id="L_username" name="user_name"
+															required="" lay-verify="required" autocomplete="off"
+															:value="user_name" :placeholder="user_name" class="layui-input">
+													</div>
+												</div>
+												<div class="layui-form-item">
+													<label class="layui-form-label" style="width: auto;">性别</label>
+													<div class="layui-input-block">
+														<input type="radio" name="user_sex" value="1" :placeholder="user_sex" title="男"
+															:checked="user_sex"> 
+														<input type="radio"
+															name="user_sex" value="0" title="女" :placeholder="user_sex" :checked="!user_sex">
+													</div>
+												</div>
+												<div class="layui-form-item">
+													<label for="L_city" class="layui-form-label"
+														style="width: auto;">城市</label>
+													<div class="layui-input-inline">
+														<input type="text" id="L_city" name="user_location"
+															autocomplete="off" :value="user_location" :placeholder="user_location"
+															class="layui-input">
+													</div>
+												</div>
+												<div class="layui-form-item layui-form-text">
+													<label for="L_sign" class="layui-form-label"
+														style="width: auto;">签名</label>
+													<div class="layui-input-inline">
+														<textarea :placeholder="user_signature" :value="user_signature" id="L_sign"
+															name="user_signature" autocomplete="off" class="layui-textarea"
+															style="height: 80px;"></textarea>
+													</div>
+												</div>
+												<div class="layui-form-item">
+													<button style="margin-left: 70px;" class="layui-btn"
+														key="set-mine" lay-filter="modifypro" lay-submit="" >确认修改</button>
+												</div>
+											</form>
+										</div></li>
+									<li class="layui-timeline-item"><i
+										class="layui-icon layui-timeline-axis">&#xe63f;</i>
+										<div class="layui-timeline-content layui-text">
+											<h3 class="layui-timeline-title">用户头像</h3>
+											<div id="userimg">
+												<div id="img1" style="display: none;">
+													<img src="" />
+												</div>
+												<div id="img2">
+													<span id="imgup">修改头像</span> <span id="imgok"
+														style="display: none;">上传头像</span>
+												</div>
+
+											</div>
+										</div></li>
+								</ul>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<!-- 左边内容开始-->
+		<!-- 右边内容开始-->
+		<div class="layui-col-md3  main-body-right">
+			<div class="layui-row layui-col-space20">
+				<div class="layui-col-md12">
+					<div class="blog-hot layui-form">
+						<div class="layui-row">
+							<div
+								class="layui-col-md9 layui-col-md-offset1 layui-col-xs9  layui-col-xs-offset1">
+								<input type="text" class="layui-input" placeholder="搜索" />
+							</div>
+							<div class="layui-col-md2 layui-col-xs2">
+								<button class="layui-btn">
+									<i class="fa fa-search"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-md12">
+					<div class="blog-hot">
+						<span class="layui-bg-blue">热门文章</span>
+						<ul id="hotArticle">
+
+						</ul>
+					</div>
+				</div>
+				<div class="layui-col-md12">
+					<div class="blog-hot">
+						<span class="layui-bg-blue">最多浏览 </span>
+						<ul id="readArticle">
+
+						</ul>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<!--右边内容结束-->
+	</div>
+	<!--内容区域结束-->
+
+	<!-- 模板开始-->
+	<!--是否登陆模板-->
+	<script type="text/html" id="loginmodel">
+			{{# if(ucookie!="null"&&ucookie!="undefined"){ }}
+			<a href="javascript:;"><img src="http://t.cn/RCzsdCq" class="layui-nav-img">天天一笑</a>
+			<dl class="layui-nav-child " style="box-shadow: 0 2px 1px white;">
+				<dd>
+					<a href="personalNew.html">修改信息</a>
+				</dd>
+				<dd>
+					<a href="personalNew.html">安全管理</a>
+				</dd>
+				<dd>
+					<a href="javascript:;" onclick="dologin.closelogin()">退出</a>
+				</dd>
+			</dl>
+			{{# } else{ }}
+
+			<a href="javascript:void(0)" onclick="dologin.login()"><i class="fa fa-user-circle-o fa-fw"></i>&nbsp;登陆</a>
+			{{# } }}
+		</script>
+	<!--登陆注册模板-->
+	<script type="text/html" id="inmodel">
+			<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+				<ul class="layui-tab-title">
+					<li class="layui-this">用户登录</li>
+					<li>用户注册</li>
+				</ul>
+				<div class="layui-tab-content">
+					<div class="layui-tab-item layui-show">
+						<form class="layui-form" id="loginview">
+							<div class="layui-form-item myinput">
+								<label class="layui-form-label"><i class="fa fa-id-badge" ></i></label>
+								<div class="layui-input-inline">
+									<input type="text" name="user_parm" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item myinput">
+								<label class="layui-form-label"><i class="fa fa-key" ></i></label>
+								<div class="layui-input-inline">
+									<input type="password" name="user_loginpas" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<div id="slider">
+									<div id="slider_bg"></div>
+									<span id="label" title="向右移动验证"><i class="fa fa-angle-double-right"></i></span> <span id="labelTip">拖动滑块验证</span>
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<button class="layui-btn layui-btn-disabled" id="loginbtn" disabled="" lay-submit lay-filter="loginDemo" style="width: 100%;">立即提交</button>
+								<br />
+								<br />
+								<a href=""><span style="text-align: center;width: 85%;display: block;margin: 0 auto;">忘记密码</span></a>
+								<br />
+								<div class="otherligin">
+									<span class="layui-text"> 其他登陆方式</span>
+									<div>
+										<a href=""><i class="fa fa-qq"></i></a>
+										<a href=""><i class="fa fa-weibo"></i></a>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="layui-tab-item">
+						<div class="layui-form-item layui-form">
+							<div class="myinput">
+								<label class="layui-form-label" style="width: auto;"><i class="fa fa-envelope" ></i></label>
+								<div class="layui-input-inline">
+									<input type="text" name="user_mail" lay-verify="email" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<button class="layui-btn" style="float: right;margin-top: 10px;" id="getcode" lay-submit lay-filter="getcodeDemo">获取验证码</button>
+						</div>
+						<div class="layui-form-item layui-form">
+							<div class="myinput" style="width: 220px;padding: 0;margin: 0;">
+								<label class="layui-form-label " style="width: auto;"><i class="fa fa-shield"></i></label>
+								<input type="text" name="code" required lay-verify="required" placeholder="邮箱验证码" autocomplete="off" disabled="" class="layui-input layui-disabled" style="float: left;width: 70px;padding: 0;">
+								<button class="layui-btn layui-btn-disabled" disabled="" style="float: right;" id="eqcode" lay-submit lay-filter="eqcodeDemo">验证</button>
+							</div>
+						</div>
+						<div class="layui-form">
+							<div class="layui-form-item myinput">
+								<label class="layui-form-label" style="width:auto;"><i class="fa fa-key" ></i></label>
+								<div class="layui-input-inline">
+									<input type="password" name="user_pas" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input layui-disabled" disabled="">
+								</div>
+							</div>
+							<div class="layui-form-item layui-form">
+								<div style="width: 150px;padding: 0;margin: 0;">
+									<label class="layui-form-label" style="width: auto;color: #343600;" id="iokreglab">不同意</label>
+									<input type="checkbox" class="layui-disabled" disabled="" id="iokreg" name="switch" lay-filter="iokreg" lay-skin="switch">
+
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<button style="width: 100%;" class="layui-btn layui-btn-disabled" disabled="" lay-submit lay-filter="regDemo" id="regbtn">立即提交</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</script>
+	<!--   模板结束-->
+	<script type="text/javascript" src="layui/layui.js"></script>
+	<script type="text/javascript" src="js/jquery3.2.1.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="js/vue.js"></script>
+	<script type="text/javascript" src="js/vue-resource.js"></script>
+	<script type="text/javascript" src="js/jquery.slideunlock.js"></script>
+	<script type="text/javascript" src="js/public.js"></script>
+	<script>
+			var dologin;
+
+			layui.use(['element', 'form', 'layer', 'laytpl', 'upload'], function() {
+				var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+				var layer = layui.layer;
+				var laytpl = layui.laytpl;
+				var form = layui.form;
+				var upload = layui.upload;
+				//初始化窗口变化事件
+				window.onresize = function() {
+					initindex.initnav();
+				}
+				//初始化按钮事件
+				$('.nav-btn').click(function() {
+					initindex.navbtn();
+				});
+				initindex.initnav();
+				initindex.initcook(laytpl, element);
+				initindex.initform(form, layer, laytpl, element);
+				dologin = {
+					login: function() {
+						initindex.login(layer, form);
+					},
+					closelogin: function() {
+						initindex.logout();
+					}
+				};
+				element.init();
+				form.render();
+
+				var uploadInst = upload.render({
+					elem: '#imgup' //绑定元素
+					,
+					field:"user_img",
+					data:{user_id:4},
+					accept: "images",//只允许上传图片
+					size: 200,/*头像大小200kb*/
+					
+					url: "user/personal/upUserHeard.do" //上传接口
+						,
+					auto: false //选择文件后不自动上传
+						,
+					bindAction: '#imgok' //指向一个按钮触发上传
+						,
+					choose: function(obj) {
+						//将每次选择的文件追加到文件队列
+						var files = obj.pushFile();
+						$('#img1').show();
+						//预读本地文件，如果是多文件，则会遍历。(不支持ie8/9)
+						obj.preview(function(index, file, result) {
+							$('#imgup').hide();
+							$('#imgok').show();
+							$('#img1>img').attr('src', result);
+								
+						});
+					},
+					before: function(obj) { //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+						layer.load(1, {
+							  shade: [0.5,'black'] //0.1透明度的白色背景
+							});
+					},
+					done: function(res) {
+						 if(res.code == 1) {
+							 setTimeout(function() {
+								 layer.closeAll("loading");
+								 layer.msg("上传成功！");
+									$('#img1').hide();
+									$('#imgok').hide();
+									$('#imgup').show();
+									$("#img2").css("background-image", "url(" + res.data +"?d="+Math.random()+")");
+								
+	                        }, 1000);
+								
+							}
+						else{
+							layer.closeAll("loading");
+							$('#img1').hide();
+							$('#imgok').hide();
+							$('#imgup').show();
+							layer.msg("上传失败！");
+						}
+						//上传完毕回调
+					},
+					error: function() {
+						//请求异常回调
+						layer.closeAll("loading");
+					}
+				});
+		var personal=new Vue({el:'#personal',
+			data:{ user_id:''
+				   ,user_name:''
+				    ,user_img:''
+				     ,user_location:''
+				     /* ,user_img:'' */
+				      ,user_sex:1
+				      ,user_signature:''
+				      ,user_mail:''	
+			        }
+			,mounted: function() {
+				var v_this=this;
+				var user_id=$.cookie("ucookie");
+				if (user_id!= "undefined"&&user_id!="null") {
+				this.$http.post('user/personal/getBasicUser.do', {user_id: user_id
+				}, {
+					emulateJSON: true
+				}).then(function(response) {
+					if(response.body.code===1){
+					var userBasic = response.body.data;
+					       v_this.user_id=userBasic.user_id;
+					    v_this.user_name=userBasic.user_name;
+					   /* v_this.user_img=userBasic.user_img; */
+					   //防止缓存导致图片修改还没变化
+					    	 $("#img2").css("background-image",'url('+userBasic.user_img+'?='+Math.random()+')'); 
+					    		v_this.user_location=userBasic.user_location;
+					    			v_this.user_sex=userBasic.user_sex;
+					    				v_this.user_signature=userBasic.user_signature;
+					    					v_this.user_mail=userBasic.user_mail;	                          
+					    					//0.5秒后执行
+					    					setTimeout(function() {
+					                        	 form.render('radio'); //刷新select选择框渲染form
+						                         form.render(); //更新全部
+					                        }, 500);
+					}
+				else{
+					layer.msg("获取失败，登陆不符");
+				}
+				}
+				
+				,function(error){
+					layer.msg("获取失败");
+				})
+			}
+			else{
+				layer.msg("获取失败参数错误");
+			}
+		}
+		,
+		filters: {  
+			 
+        },
+		beforeUpdate: function() {
+			
+		},
+		methods: {
+			
+		}
+		
+	});		
+		
+		form.on('submit(modifypro)', function(data) {
+			for(var o in data.field)
+			{
+				/* console.log(o);
+				console.log(data.field[o]); */
+				if(data.field[o]==$("#personal").find("[name="+o+"]").attr("placeholder"))
+				{
+					delete data.field[o];
+				}
+				console.log(data.field);
+			}
+			if($.isEmptyObject(data.field))
+				{
+				layer.msg("你未修改任何数据");
+				}
+			else{
+				data.field["user_id"]=personal.user_id;
+				console.log(data.field);
+			 $.ajax({
+	           	type:"post",
+	           	url:"user/personal/upUser.do",
+	           	dataType:'json',
+	           	async:true,
+	           	data:data.field,
+	           	success:function(data)
+	           	{  if(data.code==1)
+	           		{
+	           		layer.msg("修改成功");
+	           		var userBasic = data.data;
+	           		   personal.user_id=userBasic.user_id;
+	           		   personal.user_name=userBasic.user_name;
+				   /* v_this.user_img=userBasic.user_img; */
+				    	 $("#img2").css("background-image",'url('+userBasic.user_img+')'); 
+				    	 personal.user_location=userBasic.user_location;
+				    	 personal.user_sex=userBasic.user_sex;
+				    	 personal.user_signature=userBasic.user_signature;
+				    	 personal.user_mail=userBasic.user_mail;	                  
+	           		}
+	           	else
+	           		{
+	           		layer.msg(data.msg);
+	           		}
+	           	},
+	           	 error:function(jqXHR,textStatus,err){
+	               console.log('请求错误');
+	               console.log(jqXHR);
+	               
+	                 }
+	              });
+			}
+			
+			return false;
+		})
+		 $.ajax({
+           	type:"get",
+           	url:"user/basic/getArticleStar.do",
+           	dataType:'json',
+           	async:true,
+           	success:function(data)
+           	{   console.log(data)
+           		$.each(data.ArticleHot, function(index, obj) {
+           			 $("#hotArticle").append('<li><a href='+'"blogDataNew.html?article_id='+obj.article_id+'"><span >'+(index+1)+'</span>'+obj.article_name+'</a></li>'
+								);
+           		});
+           		$.each(data.ArticleNice, function(index, obj) {
+           			 $("#readArticle").append('<li><a href='+'"blogDataNew.html?article_id='+obj.article_id+'"><span >'+(index+1)+'</span>'+obj.article_name+'</a></li>'
+							);
+    		           });
+           		
+           	},
+           	 error:function(jqXHR,textStatus,err){
+               console.log('请求错误');
+               console.log(jqXHR);
+               console.log(textStatus);
+               console.log(err);
+                 }
+              });
+			});
+		</script>
+
+</body>
+
+</html>

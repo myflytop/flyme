@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>flytop后台</title>
+		<link rel="stylesheet" href="layui/css/layui.css" />
+		<style>
+			
+		</style>
+	</head>
+
+	<body style="background-color: #002B36;">
+        <form method="POST" action="blogerlogin/login.do">
+		<div class="layui-form" style="width: 400px;margin: 0 auto;margin-top: 200px;background-color:white;padding-top: 10px;padding-bottom: 10px;padding-right: 50px;">
+			<div class="layui-form-item">
+				<label class="layui-form-label">账号</label>
+				<div class="layui-input-block">
+					<input type="text" name="bloger_id" lay-verify="number|mylen" autocomplete="off" placeholder="请输入账号" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">密码</label>
+				<div class="layui-input-block">
+					<input type="password" name="bloger_pas" lay-verify="pass" autocomplete="off" placeholder="请输入密码" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item" style="padding-left: 100px;">
+				<label class="layui-form-label" style="color: red;" id="mylable"></label>
+				<div class="layui-input-block">
+					<input type="password" id="passv" lay-verify="title" autocomplete="off" class="layui-input" style="width: 60px;">
+				</div>
+			</div>
+			<div class="layui-form-item layui-anim" style="text-align: center;">
+				<button class="layui-btn" lay-submit="" lay-filter="blogin" class="">登陆</button>
+			</div>
+		</div>
+		</form>
+		<script type="text/javascript" src="layui/layui.js"></script>
+		<script>
+			var a = Math.floor(Math.random() * 10 + 1);
+			var b = Math.floor(Math.random() * 10 + 1);
+			var mylable = document.getElementById("mylable").innerHTML = a + "*" + b + "=?";
+
+			layui.use('form', function() {
+				var form = layui.form;
+				//自定义验证规则
+				form.verify({
+					mylen: function(value) {
+						if(value.length < 4) {
+							return '账号至少得5位字符啊';
+						} else if(value.length > 8) {
+							return '账号不能大于8位字符啊';
+						}
+					},
+					pass: [/(.+){6,12}$/, '密码必须6到12位多组合']
+
+				});
+				//监听提交
+				form.on('submit(blogin)', function(data) {
+					console.log(data.field);
+					if(document.getElementById("passv").value=== (a * b + "")) {
+                   document.getElementById("myform").submit();
+					} else {
+						layer.alert('验证失败', {
+							title: '提示信息'
+						});
+					}
+					return false;
+				});
+
+			});
+		</script>
+	</body>
+
+</html>

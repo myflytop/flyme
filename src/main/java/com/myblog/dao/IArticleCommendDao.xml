@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myblog.dao.IArticleCommendDao">
+	<!-- <resultMap type="com.myblog.dto.commend.MyArticle_commend"
+		id="article_commendMapper">
+		<id column="commend_id" property="commend_id" />
+		<result column="article_id" property="article_id" />
+		<result column="user_id" property="user_id" />
+		<result column="commend_con" property="commend_con" />
+		<result column="commend_time" property="commend_time" />
+		<collection property="myArticle_commend_twos"
+			ofType="com.myblog.dto.commend.MyArticle_commend_two">
+			<id column="article_commend_twoid" property="article_commend_twoid" />
+			<result column="user_replyid" property="user_replyid" />
+			<result column="user_toid" property="user_toid" />
+			<result column="commend_con" property="commend_con" />
+			<result column="commend_id" property="commend_id" />
+			<result column="commend_time" property="commend_time" />
+		</collection>
+	</resultMap> -->
+	<!-- 添加一级评论 -->
+	<insert id="addCommend" parameterType="com.myblog.entity.Article_commend"
+		useGeneratedKeys="true" keyProperty="commend_id">
+		insert into
+		article_commend(article_id,commend_con,user_id) values
+		(#{article_id},#{commend_con},#{user_id})
+	</insert>
+	<!-- 审核一级评论权限 -->
+	<update id="auditCommend">update article_commend set
+		commend_islock=#{commend_islock} where commend_id=#{commend_id}
+	</update>
+	<!-- 真实删除 一级评论及相关二级评论 -->
+	<delete id="delrealCommend" parameterType="int">delete from
+		article_commend where commend_id=#{commend_id}
+	</delete>
+	<!-- 添加二级评论 -->
+	<insert id="addtwoCommend" parameterType="com.myblog.entity.Article_commend_two"
+		useGeneratedKeys="true" keyProperty="article_commend_twoid">
+		insert into
+		article_commend_two(commend_id,commend_con,user_replyid,user_toid)
+		values (#{commend_id},#{commend_con},#{user_replyid},#{user_toid})
+	</insert>
+	<!-- 审核二级评论权限 -->
+	<update id="audittwoCommend">
+		update article_commend_two set
+		commend_islock=#{commend_islock} where
+		article_commend_twoid=#{article_commend_twoid}
+	</update>
+	<!-- 删除二级评论 物理 -->
+	<delete id="deltworealCommend" parameterType="int">
+		delete from
+		article_commend_two where
+		article_commend_twoid=#{article_commend_twoid}
+	</delete>
+	<!-- 获取评论 
+	<select id="getCommends" parameterType="int" resultMap="article_commendMapper">
+		select * from article_commend,article_commend_two where
+		(article_commend.article_id=#{article_id} and article_commend.commend_islock=0 and article_commend.commend_istwo=1 and article_commend.commend_id=article_commend_two.commend_id and article_commend_two.commend_islock=0)
+		or (article_commend.article_id=#{article_id} and article_commend.commend_islock=0 and article_commend.commend_istwo=0)
+	</select>-->
+	
+	
+	<resultMap type="com.myblog.dto.commend.MyArticle_commend"
+		id="article_commendMapper">
+		<id column="commend_id" property="commend_id" />
+		<result column="article_id" property="article_id" />
+		<result column="article_commend.user_id" property="user_id" />
+		<result column="user_img" property="user_img" />
+		<result column="user_name" property="user_name" />
+		<result column="commend_con" property="commend_con" />
+		<result column="commend_time" property="commend_time" />
+		<collection property="myArticle_commend_twos"
+			ofType="com.myblog.dto.commend.MyArticle_commend_two" select="getTwocommend" 
+			column="commend_id">
+			<id column="article_commend_twoid" property="article_commend_twoid" />
+			<result column="article_commend_twoid" property="article_commend_twoid"/>
+			<result column="user_replyid" property="user_replyid" />
+			<result column="user_toid" property="user_toid" />
+			<result column="user_replyname" property="user_replyname" />
+			<result column="user_toname" property="user_toname" />
+			<result column="commend_con" property="commend_con" />
+			<result column="commend_id" property="commend_id" />
+			<result column="commend_time" property="commend_time" />
+		</collection>
+	</resultMap>
+	<select id="getCommends" parameterType="int" resultMap="article_commendMapper">
+	select commend_id,commend_con,commend_time,article_id,article_commend.user_id,user_img,user_name from article_commend,user_info where article_commend.article_id=#{article_id} and  article_commend.commend_islock=0 and article_commend.user_id=user_info.user_id
+	
+	</select>
+	<select id="getTwocommend" resultType="com.myblog.dto.commend.MyArticle_commend_two">
+	select commend_id,commend_time,commend_con,user_replyid,user_toid,article_commend_twoid,t1.user_name user_toname,t2.user_name user_replyname from user_info t1,user_info t2,article_commend_two comd where t1.user_id=comd.user_toid and t2.user_id=comd.user_replyid and comd.commend_id=#{commend_id} and comd.commend_islock=0;
+	</select>
+	
+	
+</mapper>

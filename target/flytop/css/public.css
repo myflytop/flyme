@@ -1,0 +1,142 @@
+/*导航样式开始*/
+			.top-nav {
+				position: fixed;
+				left: 0;
+				top: 0;
+				background-color: #393D49;
+				width: 100%;
+				height: 60px;
+				z-index: 100000000;
+				border-bottom: 2px solid aquamarine;
+			}
+			
+			.nav-btn {
+				position: fixed;
+				right: 10%;
+				top: 10px;
+				border: 1px solid #5FB878;
+				width: 40px;
+				height: 40px;
+				color: white;
+				display: none;
+			}
+			
+			.nav-btn>i {
+				padding-left: 3px;
+				line-height: 40px;
+			}
+			
+			.my-nav-style {
+				position: fixed;
+				display: none;
+				padding: 0;
+				width: 100%;
+			}
+			
+			.nav-logo {
+				display: block;
+				left: 10%;
+				width: 100px;
+				line-height: 60px;
+				margin: 0 auto;
+				color: white;
+			}
+			/*导航样式结束*/
+			/*右边样式开始*/
+		   .main-body {
+				padding-top: 90px;
+			}
+			.sitemap {
+				background-color: white;
+				padding: 10px;
+				font-size: 20px;
+				line-height: 20px;
+				box-shadow: 0 2px 10px 0 rgba(0, 0, 0, .1);
+				border-radius: 0px 5px 5px 0px;
+			}
+			
+			.blog-hot {
+				background-color: white;
+				padding-top: 10px;
+				padding-bottom: 10px;
+				padding-right: 5px;
+				box-shadow: 0 2px 10px 0 rgba(0, 0, 0, .1);
+				border-radius: 5px;
+			}
+			
+			.blog-hot>span {
+				display: block;
+				width: 90%;
+				margin: 0 auto;
+				padding-top: 5px;
+				padding-bottom: 5px;
+				padding-left: 20px;
+				font-weight: bold;
+				box-shadow: 0 2px 10px 0 rgba(0, 0, 0, .1);
+				border-radius: 5px;
+			}
+			
+			.blog-hot>ul {
+				padding-left: 10px;
+			}
+			
+			.blog-hot>ul {
+				padding-left: 10px;
+			}
+			
+			.blog-hot>ul>li {
+				transition: 0.1s padding-left;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				padding-top: 10px;
+			}
+			
+			.blog-hot>ul>li>a>span {
+				color: white;
+				padding: 5px;
+				margin-right: 4px;
+				background-color: red;
+			}
+			
+			.blog-hot>ul>li:hover {
+				padding-left: 10px;
+			}
+			/*右边样式结束*/
+			
+		/*登陆样式*/
+		#loginview .layui-form-label {
+			width: auto;
+		}
+
+		.myinput {
+			height: 38px;
+			border-width: 1px;
+			border-style: solid;
+			background-color: #fff;
+			border-radius: 2px;
+			border-color: #e6e6e6;
+		}
+
+		.myinput input {
+			border: none;
+			width: auto;
+		}
+
+		.otherligin>* {
+			text-align: center;
+			width: 85%;
+			display: block;
+			margin: 0 auto;
+		}
+
+		.otherligin i {
+			font-size: 20px;
+			padding-top: 10px;
+			padding-left: 5px;
+			padding-right: 5px;
+		}
+
+		.myinput>div>input {
+			padding: 0;
+		}

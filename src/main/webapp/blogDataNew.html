@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="layui/css/layui.css" />
+		<link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="css/slide-unlock.css" />
+		<link rel="shortcut icon" href="img/mylog.ico" type="image/x-icon">
+		<link rel="stylesheet" href="css/public.css" />
+		<link href="http://github.com/yrgoldteeth/darkdowncss/raw/master/darkdown.css" rel="stylesheet" />
+		<link rel="stylesheet" href="marketdown/css/editormd.css" />
+		<style type="text/css">
+			body {
+				background-color: rgb(238, 238, 238);
+				overflow-x: hidden;
+			}
+			
+			.mycomment,
+			.main-body-con,
+			.blog-module {
+				width: 100%;
+				background-color: white;
+				box-shadow: 0 2px 10px 0 rgba(0, 0, 0, .1);
+				padding: 0;
+				overflow: hidden;
+				border-radius: 5px;
+			}
+			
+			#test-editormd-view2 {
+				width: 96%;
+				padding: 0;
+				margin: 0 auto;
+			}
+			
+			.main-body-con>h2 {
+				padding-top: 20px;
+				padding-bottom: 20px;
+				text-align: center;
+			}
+			
+			.article-detail-info {
+				width: 96%;
+				margin: 0 auto;
+				border: 1px dashed #808080;
+				font-size: 13px;
+				color: #808080;
+				padding: 5px 0;
+				font-family: SimSun;
+				text-align: center;
+				margin-bottom: 20px;
+			}
+			
+			.article-detail-info>span {
+				padding: 10px;
+			}
+			
+			.thumb-up {
+				font-size: 30px;
+			}
+			
+			.other {
+				padding: 20px;
+				width: 96%;
+				margin: 0 auto;
+				text-align: center;
+			}
+			
+			.layui-layedit-tool {
+				padding-top: 0;
+				padding-bottom: 0;
+				background-color: #FBFBFB;
+				color: white;
+			}
+			
+			.layui-icon {
+				margin: 0!important;
+				width: 43px!important;
+				line-height: 43px!important;
+				font-size: 20px!important;
+				height: 43px!important;
+				/* border-right: 1px solid #e6e6e6!important; */
+				color: #009E94!important;
+			}
+			
+			.layedit-tool-mid {
+				display: none!important;
+			}
+			.jieda>li{
+			padding-top:5px;
+			padding-bottom:5px;
+			}
+			.jieda img {
+				width: 100px;
+				height: 100px;
+			}
+			
+			.jieda li {
+				display: block;
+				clear: both;
+			}
+			
+			.detail-about>div {
+				float: left;
+			}
+			
+			.fly-detail-user {
+				margin-top: 20px;
+				margin-left: 10px;
+			}
+			
+			.fly-detail-user>div {
+				margin-top: 20px;
+			}
+			
+			.detail-body {
+				clear: both;
+				padding-left: 5px;
+				text-indent: 2em;
+				margin-bottom: 15px;
+			}
+			
+			.fly-detail-floor {
+				font-size: 30px;
+				float: right!important;
+				padding-right: 10px;
+			}
+			
+			.detail-body {
+				padding-top: 5px;
+			}
+			
+			.jieda-reply>div {
+				float: left;
+			}
+			
+			.jieda-reply:after {
+				clear: all;
+			}
+			
+			.jieda-reply-ok {
+				text-indent: 0;
+				margin-right: 10px;
+				float: right;
+			}
+			
+			.commend-reply {
+				text-indent: 3em;
+			}
+			
+			.replay-two {
+				padding-top: 20px;
+			}
+			.icolor{color:#CD00CD;
+			
+			}
+		</style>
+	</head>
+
+	<body ondragstart="return false">
+		<!--导航开始-->
+		<nav class="top-nav">
+			<ul class="layui-nav my-nav-style" id="main-nav" lay-filter="my-top-nav" style="text-align: center;">
+				<li id="nav-login" class="layui-nav-item layui-layout-right" lay-unselect="" style="margin-right:80px;">
+
+				</li>
+				<li class="layui-nav-item ">
+					<a href="indexNew.html"><i class="fa fa-home fa-fw"></i>网站首页</a>
+				</li>
+				<li class="layui-nav-item layui-this">
+					<a href="blogDataNew.html"><i class="fa fa-book fa-fw"></i>博文专栏</a>
+				</li>
+				<li class="layui-nav-item">
+					<a href=""><i class="fa fa-tags fa-fw"></i>教程专栏</a>
+				</li>
+				<li class="layui-nav-item">
+					<a href=""><i class="fa fa-download fa-fw"></i>资源分享</a>
+				</li>
+				<li class="layui-nav-item ">
+					<a href="aboutNew.html"><i class="fa fa-info fa-fw"></i>关于本站</a>
+				</li>
+			</ul>
+			<a class="nav-logo" href="javascript:void(0)">FLYTOP</a>
+			<span class="nav-btn"><i class="fa fa-navicon  fa-2x fa-fw"></i></span>
+		</nav>
+		<!--导航结束-->
+
+		<!--内容区域开始-->
+		<div class="layui-row layui-col-space20 main-body" id="articleCon">
+			<!--路径导航开始-->
+			<div class="layui-col-md10 layui-col-md-offset1">
+				<blockquote class="layui-elem-quote layui-breadcrumb sitemap">
+					<a href="indexNew.html" title="网站首页">网站首页</a>
+					<a href="searchArticleNew.html">博文专栏</a>
+					<a v-bind:href="sort_article_id | getsorturl" v-html="sort_article_name">JAVA教程</a>
+					<a><cite v-html="article_title"></cite></a>
+				</blockquote>
+			</div>
+			<!--路径导航结束-->
+			<!-- 左边内容开始-->
+			<div class="layui-col-md7  layui-col-md-offset1 main-body-left" id="main-body-left">
+				<div class="layui-row layui-col-space20" >
+					<div class="layui-col-md12">
+						<div class="main-body-con">
+							<h2 v-html="article_title">标题</h2>
+							<div class="article-detail-info">
+								<span class="date">
+                                 <i class="fa fa-clock-o fa-fw"></i>
+                                 <span v-html="article_time">2017年10月02日</span>
+								</span>
+								<span class="user-blog">
+                                 <i class="fa fa-user fa-fw"></i>
+                                 <span v-html="bloger_name">汪汪汪</span>
+								</span>
+								<span class="views">
+                                 <i class="fa fa-eye fa-fw"></i>
+                                 <span v-html="reading_count">2,199</span>
+								</span>
+							</div>
+							<div id="test-editormd-view2">
+								<textarea v-text="article_content" id="append-test" style="display:none;">
+                                </textarea>
+							</div>
+							<div class="other">
+								<a style="cursor: pointer;" href="javascript:void(0)">
+									<span class="thumb-up">
+                                 <i class="fa fa-thumbs-up fa-fw"   v-on:click="upvote()"></i>
+                                 <span v-html="upvote_count" ></span>
+                                   </span>
+								</a>
+								
+							</div>
+
+						</div>
+					</div>
+					<div class="layui-col-md12">
+						<div style="background-color: white;padding-bottom: 20px;" class="mycomment">
+							<div style="width: 96%;margin: 0 auto;">
+							   <div  style="border:1px solid #e2e2e2;padding:10px;margin-top:10px">
+								<div v-if="commend_count<1&&boollogin" style="font-size:30px;width:400px;margin:0 auto;padding-bottom:20px;text-align:center">消灭0回复</div>
+								
+								<div id="commendMsg">
+								
+								</div>
+								<div ><span>评论</span>
+							    <span v-html="commend_count" style="font-size:20px;color:blue"></span>
+							    </div>
+								<div id="commendCon">
+								<textarea id="commendbox1" name="commend_con" required="" lay-verify="required" placeholder="请输入内容" class="layui-textarea fly-editor" style="height: 167px; margin-top: 0px; margin-bottom: 0px;"></textarea>
+								<div style="padding-top: 10px;height:38px;">
+									<button class="layui-btn" style="float:right" @click="oneCommend" >提交评论</button>
+								</div>
+								</div>
+								
+                               </div>
+								<div v-if="commends.length>0">
+									<ul class="jieda" id="jieda">
+										<li v-for="commend in commends">
+											<div class="detail-about detail-about-reply">
+												<div>
+													<a class="fly-avatar" href="/u/2001720/">
+														<img v-bind:src="commend.user_img" v-bind:alt="commend.user_name"></a>
+												</div>
+												<div class="fly-detail-user">
+													<a href="/u/2001720/" class="fly-link">
+														<cite v-html="commend.user_name"></cite>
+													</a>
+													<div class="detail-hits">
+														<span v-html="commend.commend_time"></span>
+													</div>
+												</div>
+												<div class="fly-detail-floor">
+													<span>
+                                                    <!--  1楼 -->
+                                                 </span>
+												</div>
+											</div>
+											<div class="detail-body">
+												<p v-html="commend.commend_con" class="layui-text" style="word-wrap: break-word;font-size:20px;"></p>
+												<span class="layui-btn jieda-reply-ok layui-btn-radius" @click="commendbtn(commend.user_id,commend.commend_id)">回复 </span>
+												<span class="layui-btn jieda-reply-ok layui-btn-primary" style="border:none;font-size:18px" title="点击查看" v-if="commend.myArticle_commend_twos.length>0" v-on:click="twoShow($event)" ><i class="fa fa-commenting fa-fw" v-html="commend.myArticle_commend_twos.length"></i></span>  
+											</div>	
+											<br/>
+											<div class="replay-two" v-if="commend.myArticle_commend_twos.length>0" style="display:none">
+												<dd>
+													<dl class="commend-reply" v-for="commend_two in commend.myArticle_commend_twos">
+														<p><span><a v-html="commend_two.user_toname"></a>@<a  v-html="commend_two.user_replyname"></a><i>:</i></span><span class="layui-text" style="word-wrap: break-word;" v-html="commend_two.commend_con"></span>
+															<button class="layui-btn layui-btn-sm layui-btn-radius " style="float: right" @click="commendbtn(commend_two.user_replyid,commend.commend_id)">回复</button>
+															<hr />
+														</p>
+													</dl>
+												</dd>
+											</div>
+											<hr class="layui-bg-green" />
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 左边内容开始-->
+			<!-- 右边内容开始-->
+			<div class="layui-col-md3  main-body-right">
+				<div class="layui-row layui-col-space20">
+					<div class="layui-col-md12">
+						<div class="blog-hot layui-form">
+							<div class="layui-row">
+								<div class="layui-col-md9 layui-col-xs9 layui-col-xs-offset1 ">
+									<input type="text" class="layui-input" placeholder="搜索" />
+								</div>
+								<div class="layui-col-md2 layui-col-xs2">
+									<button class="layui-btn"><i class="fa fa-search"></i></button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="layui-col-md12">
+						<div class="blog-hot">
+							<span class="layui-bg-blue">热门文章</span>
+							<ul id="hotArticle">
+							
+							</ul>
+						</div>
+					</div>
+					<div class="layui-col-md12">
+						<div class="blog-hot">
+							<span class="layui-bg-blue">最多浏览 </span>
+							<ul id="readArticle">
+							
+							</ul>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<!--右边内容结束-->
+		</div>
+		<!--内容区域结束-->
+
+		<!-- 模板开始-->
+		<!--是否登陆模板-->
+		<script type="text/html" id="loginmodel">
+			{{# if(ucookie!="null"&&ucookie!="undefined"){ }}
+			<a href="javascript:;"><img src="http://t.cn/RCzsdCq" class="layui-nav-img">天天一笑</a>
+			<dl class="layui-nav-child " style="box-shadow: 0 2px 1px white;">
+				<dd>
+					<a href="personalNew.html">修改信息</a>
+				</dd>
+				<dd>
+					<a href="personalNew.html">安全管理</a>
+				</dd>
+				<dd>
+					<a href="javascript:;" onclick="dologin.closelogin()">退出</a>
+				</dd>
+			</dl>
+			{{# } else{ }}
+
+			<a href="javascript:void(0)" onclick="dologin.login()"><i class="fa fa-user-circle-o fa-fw"></i>&nbsp;登陆</a>
+			{{# } }}
+		</script>
+		<!--登陆注册模板-->
+		<script type="text/html" id="inmodel">
+			<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+				<ul class="layui-tab-title">
+					<li class="layui-this">用户登录</li>
+					<li>用户注册</li>
+				</ul>
+				<div class="layui-tab-content">
+					<div class="layui-tab-item layui-show">
+						<form class="layui-form" id="loginview">
+							<div class="layui-form-item myinput">
+								<label class="layui-form-label"><i class="fa fa-id-badge" ></i></label>
+								<div class="layui-input-inline">
+									<input type="text" name="user_parm" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item myinput">
+								<label class="layui-form-label"><i class="fa fa-key" ></i></label>
+								<div class="layui-input-inline">
+									<input type="password" name="user_loginpas" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<div id="slider">
+									<div id="slider_bg"></div>
+									<span id="label" title="向右移动验证"><i class="fa fa-angle-double-right"></i></span> <span id="labelTip">拖动滑块验证</span>
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<button class="layui-btn layui-btn-disabled" id="loginbtn" disabled="" lay-submit lay-filter="loginDemo" style="width: 100%;">立即提交</button>
+								<br />
+								<br />
+								<a href=""><span style="text-align: center;width: 85%;display: block;margin: 0 auto;">忘记密码</span></a>
+								<br />
+								<div class="otherligin">
+									<span class="layui-text"> 其他登陆方式</span>
+									<div>
+										<a href=""><i class="fa fa-qq"></i></a>
+										<a href=""><i class="fa fa-weibo"></i></a>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="layui-tab-item">
+						<div class="layui-form-item layui-form">
+							<div class="myinput">
+								<label class="layui-form-label" style="width: auto;"><i class="fa fa-envelope" ></i></label>
+								<div class="layui-input-inline">
+									<input type="text" name="user_mail" lay-verify="email" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<button class="layui-btn" style="float: right;margin-top: 10px;" id="getcode" lay-submit lay-filter="getcodeDemo">获取验证码</button>
+						</div>
+						<div class="layui-form-item layui-form">
+							<div class="myinput" style="width: 220px;padding: 0;margin: 0;">
+								<label class="layui-form-label " style="width: auto;"><i class="fa fa-shield"></i></label>
+								<input type="text" name="code" required lay-verify="required" placeholder="邮箱验证码" autocomplete="off" disabled="" class="layui-input layui-disabled" style="float: left;width: 70px;padding: 0;">
+								<button class="layui-btn layui-btn-disabled" disabled="" style="float: right;" id="eqcode" lay-submit lay-filter="eqcodeDemo">验证</button>
+							</div>
+						</div>
+						<div class="layui-form">
+							<div class="layui-form-item myinput">
+								<label class="layui-form-label" style="width:auto;"><i class="fa fa-key" ></i></label>
+								<div class="layui-input-inline">
+									<input type="password" name="user_pas" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input layui-disabled" disabled="">
+								</div>
+							</div>
+							<div class="layui-form-item layui-form">
+								<div style="width: 150px;padding: 0;margin: 0;">
+									<label class="layui-form-label" style="width: auto;color: #343600;" id="iokreglab">不同意</label>
+									<input type="checkbox" class="layui-disabled" disabled="" id="iokreg" name="switch" lay-filter="iokreg" lay-skin="switch">
+
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<button style="width: 100%;" class="layui-btn layui-btn-disabled" disabled="" lay-submit lay-filter="regDemo" id="regbtn">立即提交</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</script>
+		<!--   模板结束-->
+		<script type="text/javascript" src="layui/layui.js"></script>
+		<script type="text/javascript" src="js/jquery3.2.1.js"></script>
+		<script type="text/javascript" src="js/jquery.cookie.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/vue-resource.js"></script>
+		<script type="text/javascript" src="js/jquery.slideunlock.js"></script>
+		<script type="text/javascript" src="js/public.js"></script>
+		<!--marketdown Star -->
+		<script src="marketdown/lib/marked.min.js"></script>
+		<script src="marketdown/lib/prettify.min.js"></script>
+		<script src="marketdown/lib/raphael.min.js"></script>
+		<script src="marketdown/lib/underscore.min.js"></script>
+		<script src="marketdown/lib/sequence-diagram.min.js"></script>
+		<script src="marketdown/lib/flowchart.min.js"></script>
+		<script src="marketdown/lib/jquery.flowchart.min.js"></script>
+		<script src="marketdown/editormd.js"></script>
+		<!--marketdown End-->
+		<script>
+			function getQueryVariable(variable) {
+				var query = window.location.search.substring(1);
+				var vars = query.split("&");
+				for(var i = 0; i < vars.length; i++) {
+					var pair = vars[i].split("=");
+					if(pair[0] == variable) {
+						return pair[1];
+					}
+				}
+				return(false);
+			}
+			var dologin;
+			
+			layui.use(['element', 'form', 'layer', 'laytpl','layedit'], function() {
+				var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+				var layer = layui.layer;
+				var laytpl = layui.laytpl;
+				var form = layui.form;
+                var layedit=layui.layedit;
+                layer.config({
+  				  extend: 'myskin/style.css', //加载新皮肤
+  				  skin: 'layui-ext-myskin' //一旦设定，所有弹层风格都采用此主题。
+  				});
+				//初始化窗口变化事件
+				window.onresize = function() {
+					initindex.initnav();
+				}
+				//初始化按钮事件
+				$('.nav-btn').click(function() {
+					initindex.navbtn();
+				});
+				initindex.initnav();
+				initindex.initcook(laytpl, element);
+				initindex.initform(form, layer, laytpl, element);
+				dologin = {
+					login: function() {
+						initindex.login(layer, form);
+					},
+					closelogin: function() {
+						initindex.logout();
+					}
+				};
+				var myedit;
+				var myedit1;
+			var articleinit={
+				commendbox:function(boxid){
+					myedit=layedit.build(boxid, {
+						tool: ['face',
+							'strong' //加粗
+							, 'italic' //斜体
+							, 'underline' //下划线
+							, 'link', 'unlink', 'left', 'center', 'right'
+						],
+						height: 'auto'
+					}); //建立编辑器
+				},
+				commendbox1:function(boxid){
+					myedit1=layedit.build(boxid, {
+						tool: ['face',
+							'strong' //加粗
+							, 'italic' //斜体
+							, 'underline' //下划线
+							, 'link', 'unlink', 'left', 'center', 'right'
+						],
+						height: 'auto'
+					}); //建立编辑器
+				}
+			}	
+					
+            var getarticle = new Vue({
+				el: '#articleCon',
+				data: {
+					boolcommend:false,
+					boollogin:false,
+					article_id: '',
+					article_title: '',
+					article_content: '',
+					article_time: '',
+					sort_article_id: '',
+					sort_article_name: '',
+					bloger_id: '',
+					bloger_name: '',
+					reading_count: '',
+					commend_count: '',
+					upvote_count: '',
+					commends: []
+				},
+				mounted: function() {
+					var vcom_this = this;
+					var art_id = parseInt(getQueryVariable('article_id'));
+					articleinit.commendbox1('commendbox1');
+					if(!isNaN(art_id)) {
+						this.$http.post('user/basic/getArticleAll.do', {
+							article_id: art_id
+						}, {
+							emulateJSON: true
+						}).then(function(response) {
+							console.log(response);
+							
+							var myUserArticle = response.body.myUserArticle;
+							if(myUserArticle!=null)
+								{
+							var myArticle_commend = response.body.myArticle_commend;
+							console.log(myUserArticle);
+							vcom_this.article_id = myUserArticle.article_id;
+							vcom_this.article_title = myUserArticle.article_title;
+							vcom_this.article_content = myUserArticle.article_content;
+							vcom_this.article_time = myUserArticle.article_time;
+							vcom_this.sort_article_id = myUserArticle.sort_article_id;
+							vcom_this.sort_article_name = myUserArticle.sort_article_name;
+							vcom_this.bloger_id = myUserArticle.bloger_id;
+							vcom_this.bloger_name = myUserArticle.bloger_name;
+							vcom_this.reading_count = myUserArticle.reading_count;
+							vcom_this.commend_count = myUserArticle.commend_count;
+							vcom_this.upvote_count = myUserArticle.upvote_count;
+							editormd.markdownToHTML("test-editormd-view2", {
+								markdown: myUserArticle.article_content, //+ "\r\n" + $("#append-test").text(),
+								htmlDecode: "style,script,iframe", // you can filter tags decode
+								emoji: true,
+								taskList: true,
+								tex: true, // 默认不解析
+								flowChart: true, // 默认不解析
+								sequenceDiagram: true, // 默认不解析
+							});
+							console.log(myArticle_commend);
+							vcom_this.commends = myArticle_commend;
+							/* layedit.build('commendbox', {
+								tool: ['face',
+									'strong' //加粗
+									, 'italic' //斜体
+									, 'underline' //下划线
+									, 'link', 'unlink', 'left', 'center', 'right'
+								],
+								height: 'auto'
+							});  *///建立编辑器
+							
+							var user_id=$.cookie("ucookie");
+							if ((ucookie != "undefined")&&(user_id!="null")) {
+								 $.ajax({
+					                 	type:"get",
+					                 	url:"user/basic/countUpvote.do",
+					                 	async:true,
+					                 	dataType:'json',
+					                 	data:{'article_id':getarticle.article_id,'user_id':user_id},
+					                 	success:function(data)
+					                 	{  console.log(data.code);
+					                 	
+					                 		if(data.code===1)
+					                 		{
+
+					                 		$(".thumb-up>i").addClass("icolor");
+					                 		$(".thumb-up>i").attr("title","已赞");
+					                 		}
+					                 	},
+					                 	 error:function(jqXHR,textStatus,err){
+					                     console.log('请求错误');
+					                     console.log(jqXHR);
+					                     console.log(textStatus);
+					                     console.log(err);
+					                       }
+					                    });
+								 getarticle.boollogin=true;
+								 
+							  }
+							else{
+								$("#commendMsg").append("<div style='font-size:30px;width:400px;margin:0 auto;padding-bottom:5px;padding-top:15px'>必须登陆才可以评论！<span style='padding-left:20px;color:red;font-size:20px'><a href='javascript:void(0)' onclick='dologin.login()'>登陆<a></span></div>");
+								
+							}
+							
+							}
+						else{
+							$("#articleCon").empty();
+							$("#articleCon").append('<div class="layui-col-md12" ><div class="main-body-con" style="text-align:center;padding-bottom:50px;padding-top:50px;">未获取到相关数据</div></div>');
+						}
+							// 响应成功回调
+						}, function(response) {
+							// 响应错误回调
+						});
+						
+					} else {
+							$("#articleCon").empty();
+							$("#articleCon").append('<div class="layui-col-md12" ><div class="main-body-con" style="text-align:center;padding-bottom:50px;padding-top:50px;">未获取到相关数据</div></div>');
+						
+						console.log('参数错误');
+					}
+					
+				}
+				,
+				filters: {  
+					getsorturl:function (value) {
+						
+						var url="searchArticleNew.html?sort_article_id="+value;
+		                return url;  
+		            }  
+		        },
+				beforeUpdate: function() {
+
+				},
+				methods: {
+					oneCommend:function(){
+						
+						var user_id=$.cookie("ucookie");
+						if (user_id!= "undefined"&&user_id!="null") {
+							$.ajax({
+			                 	type:"get",
+			                 	url:"user/basic/addCommend.do",
+			                 	dataType:'json',
+			                 	async:true,
+			                 	data:{'article_id':getarticle.article_id,
+			                 		'user_id':user_id,
+			                 		'comtype':1,
+			                 		'commend_con':layedit.getContent(myedit1)
+			                 		},
+			                 	success:function(data)
+			                 	{   if(data.code===1)
+			                 		{
+			                 		
+			                 		window.location.reload();
+			                 		}
+			                 		console.log(data);
+			                 	},
+			                 	 error:function(jqXHR,textStatus,err){
+			                     console.log('请求错误');
+			                     console.log(jqXHR);
+			                     console.log(textStatus);
+			                     console.log(err);
+			                 	 }
+			                    });	
+						}
+						else{
+							layer.alert("用户可能未登录");
+							
+						}
+					},
+					twoShow:function(event){
+						var vb=$(event.currentTarget).parent().next().next('.replay-two');
+				
+						if(vb.html()!=undefined)
+							{
+							if(vb.is(":hidden"))
+								{
+								vb.show();
+								}
+							else
+								vb.hide();
+							}
+					
+					},
+					commendbtn:function(toid,commend_id)
+					{   
+                        var user_id=$.cookie("ucookie");
+						if (user_id!="undefined"&&user_id!="null"&&user_id!=toid) {
+						var vbt=$(event.currentTarget);
+						var are='50%';
+						if($(window).width() < 769)
+							{
+							are='80%';
+							}
+						layer.open({
+							  title: ['评论', 'font-size:18px;'],
+							  area: are,
+							  skin: 'layui-ext-myskin',
+							  id:'only',
+							  type: 1, 
+							  offset: 'auto',
+							  content: '<textarea id="commendbox" name="commend_con" required="" lay-verify="required" placeholder="请输入内容" class="layui-textarea fly-editor" style="height: 167px; margin-top: 0px; margin-bottom: 0px;"></textarea>'
+							 ,success: function(layero, index){
+								articleinit.commendbox('commendbox'); 
+							  }
+							,btn:['提交评论']
+							,btnAlign: 'c'
+					        ,btn1: function(index, layero){
+					        	$.ajax({
+				                 	type:"get",
+				                 	url:"user/basic/addCommend.do",
+				                 	dataType:'json',
+				                 	async:true,
+				                 	data:{'article_id':getarticle.article_id,
+				                 		'user_id':user_id,
+				                 		'user_toid':toid,
+				                 		'commend_id':commend_id,
+				                 		'comtype':2,
+				                 		'commend_con':layedit.getContent(myedit)
+				                 		},
+				                 	success:function(data)
+				                 	{  if(data.code==1)
+				                 		{
+				                 	
+				                 		layer.closeAll();
+				                 		window.location.reload();
+				                 		}
+				                 	else
+				                 		{
+				                 		layer.alert("评论失败");
+				                 		layer.closeAll();
+				                 		}
+				                 		console.log(data);
+				                 	},
+				                 	 error:function(jqXHR,textStatus,err){
+				                     console.log('请求错误');
+				                     console.log(jqXHR);
+				                     console.log(textStatus);
+				                     console.log(err);
+				                       }
+
+				                    });
+					        	alert(layedit.getContent(myedit));
+					        	return false;
+					        }
+						});
+						}
+						
+					else{
+						alert("用户可能未登录或者不能回复自己");
+					}
+					
+						/* $(event.currentTarget).before('<textarea id="commendbox" name="commend_con" required="" lay-verify="required" placeholder="请输入内容" class="layui-textarea fly-editor" style="height: 167px; margin-top: 0px; margin-bottom: 0px;"></textarea>'
+								+'<div style="padding-top: 20px;margin-left: 10px;padding-bottom:10px ;">'
+									+'<button class="layui-btn">提交评论</button>'
+								+'</div>');
+								 articleinit.commendbox('commendbox'); */
+						/* layer.tips('在上面', $(event.currentTarget), {
+							  tips: 4
+							}); */
+					},
+					upvote: function() {
+						var user_id=$.cookie("ucookie");
+						
+						if (ucookie != "undefined"&&ucookie!=null) {
+							/* alert(ucookie); */
+                           $.ajax({
+                 	type:"get",
+                 	url:"user/basic/addUpvote.do",
+                 	dataType:'json',
+                 	async:true,
+                 	data:{'article_id':getarticle.article_id,'user_id':user_id},
+                 	success:function(data)
+                 	{   if(data.code==1)
+                 		{getarticle.upvote_count++;
+                 		$(".thumb-up>i").addClass("icolor");
+                 		$(".thumb-up>i").attr("title","已赞");
+                 		
+                 		}
+                 		console.log(data);
+                 	},
+                 	 error:function(jqXHR,textStatus,err){
+                     console.log('请求错误');
+                     console.log(jqXHR);
+                     console.log(textStatus);
+                     console.log(err);
+                       }
+                    });
+                       } 
+						else{
+							 layer.alert("用户可能未登录"); 
+						}
+					},  
+					
+
+				}
+				
+			});
+			 $.ajax({
+              	type:"get",
+              	url:"user/basic/getArticleStar.do",
+              	dataType:'json',
+              	async:true,
+              	success:function(data)
+              	{   console.log(data)
+              		$.each(data.ArticleHot, function(index, obj) {
+              			 $("#hotArticle").append('<li><a href='+'"blogDataNew.html?article_id='+obj.article_id+'"><span >'+(index+1)+'</span>'+obj.article_name+'</a></li>'
+								);
+              		});
+              		$.each(data.ArticleNice, function(index, obj) {
+              			 $("#readArticle").append('<li><a href='+'"blogDataNew.html?article_id='+obj.article_id+'"><span >'+(index+1)+'</span>'+obj.article_name+'</a></li>'
+							);
+       		           });
+              		
+              	},
+              	 error:function(jqXHR,textStatus,err){
+                  console.log('请求错误');
+                  console.log(jqXHR);
+                  console.log(textStatus);
+                  console.log(err);
+                    }
+                 });
+			});
+			
+		</script>
+
+	</body>
+
+</html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+                   
+<mapper namespace="com.myblog.dao.IArticleDao">
+	<select id="getSorts" resultType="com.myblog.dto.MSort">
+	select sort_article_id,sort_article_name from article_sort
+	</select>
+	<insert id="addArticle" parameterType="com.myblog.entity.Article" useGeneratedKeys="true" keyProperty="article_id">
+	INSERT into article(article_title,sort_article_id,article_content,bloger_id,article_img_brief,article_con_brief) 
+	values(#{article_title},#{sort_article_id},#{article_content},#{bloger_id},#{article_img_brief},#{article_con_brief}) 
+	</insert>
+	<insert id="addArticle_star" parameterType="int" >
+	INSERT into article_star set article_id=#{article_id}
+	</insert>
+	<select id="getArticle" parameterType="int" resultType="com.myblog.entity.Article">
+	select * from article where article_id=#{article_id}
+	</select>
+	<select id="getArticleList" parameterType="com.myblog.dto.args.ArticleArg" resultType="com.myblog.dto.MyArticle"> 
+	select * from blog.mytitle_view  <where> 
+    <if test="article_id != null">
+         article_id = #{article_id}
+    </if> 
+    <if test="article_title != null">
+        AND article_title Like #{article_title}
+    </if>
+    <if test="sort_article_id != null">
+        AND sort_article_id= #{sort_article_id}
+    </if>
+  </where>
+	</select>
+</mapper>

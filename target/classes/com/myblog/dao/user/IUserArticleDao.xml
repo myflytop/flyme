@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myblog.dao.user.IUserArticleDao" >
+	<select id="getArticleTitle" resultType="com.myblog.dto.user.MyUserArticle_title" parameterType="com.myblog.dto.args.SearchArtArg">
+	SELECT * FROM blog.mytitle_userview <where>
+	  <if test="searchArg!=null">
+	  article_title like #{searchArg}
+	  </if>
+	  <if test="sortArgs!=null">
+	  AND sort_article_id in
+	  <foreach collection="sortArgs" index="index" item="item" open="(" separator="," close=")">
+	   #{item}
+	</foreach>
+	</if>
+	</where> 
+	ORDER BY article_time DESC
+	</select>
+	<select id="getArticle" parameterType="int" resultType="com.myblog.dto.user.MyUserArticle">
+	select article.article_id,article_title,article_time,article.sort_article_id,sort_article_name,
+	article.bloger_id,bloger_name,reading_count,commend_count,upvote_count,article_content from bloger_info,article,article_star,article_sort where
+	bloger_info.bloger_id=article.bloger_id and article.sort_article_id=article_sort.sort_article_id and article.article_id=article_star.article_id and article.article_id=#{article_id}
+	</select>
+	
+	<select id="getArticleHot" resultType="com.myblog.dto.ArticleNice">
+	 select article_id,article_title as article_name  from article where article_id in (select article_id from article_hot)
+	</select>
+	<select id="getArticleNice" resultType="com.myblog.dto.ArticleNice">
+	 select article_id,article_title as article_name from article where article_id in (select article_id from (select * from article_star order by reading_count desc LIMIT 10)as t ) 
+	</select>
+	
+	<!-- Read Star -->
+	<update id="plusrtReadCount" parameterType="int">
+	update article_star set reading_count=reading_count+1 where article_id=#{article_id}
+	</update>
+	<insert id="addrtRoteRead" parameterType="com.myblog.entity.rote.ReadRote">
+	insert into read_rote(article_id,read_user,read_ip) value(#{article_id},#{user_id},#{read_ip})
+	</insert>
+	<!-- Read End -->
+	<!-- Upvote Star -->
+	<update id="plusrtUpvoteCount" parameterType="int">
+	update article_star set upvote_count=upvote_count+1 where article_id=#{article_id}
+	</update>
+	<insert id="addrtRoteUpvote" parameterType="com.myblog.entity.rote.UpvoteRote">
+	insert into upvote_rote(article_id,upvote_user,upvote_ip) value(#{article_id},#{user_id},#{upvote_ip})</insert>
+	<select id="countUpvote" resultType="int">
+	select count(*) from upvote_rote where upvote_user=#{user_id} and article_id=#{article_id}
+	</select>
+	<!-- Upvote End -->
+	<!-- Commend Star -->
+	<insert id="addrtOneCommend" parameterType="com.myblog.entity.Article_commend"
+		useGeneratedKeys="true" keyProperty="commend_id">
+		insert into
+		article_commend(article_id,commend_con,user_id) values
+		(#{article_id},#{commend_con},#{user_id})
+	</insert>
+	<!-- 添加二级评论 -->
+	<insert id="addrtTwoCommend" parameterType="com.myblog.entity.Article_commend_two"
+		useGeneratedKeys="true" keyProperty="article_commend_twoid">
+		insert into article_commend_two(commend_id,commend_con,user_replyid,user_toid)
+		values (#{commend_id},#{commend_con},#{user_replyid},#{user_toid})
+	</insert>
+	<update id="plusrtCommendCount" parameterType="int">
+	update article_star set commend_count=commend_count+1 where article_id=#{article_id}
+	</update>
+	<insert id="addrtRoteCommend" parameterType="com.myblog.entity.rote.CommendRote">
+	insert into commend_rote(article_id,commend_user,commend_id,commend_type,commend_ip) value(#{article_id},#{user_id},#{commend_id},#{commend_type},#{commend_ip})</insert>
+	<!-- commend End -->
+	<select id="getSorts" resultType="com.myblog.dto.MSort">
+	select sort_article_id,sort_article_name from article_sort
+	</select>
+</mapper>

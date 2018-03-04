@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myblog.dao.user.IUserDao" >
+    <select id="countMail" parameterType="String" resultType="int">
+    select count(*) from user where user_mail=#{user_mail}
+    </select>
+    <insert id="addUser" parameterType="com.myblog.entity.User" useGeneratedKeys="true" keyProperty="user_id">
+    insert into user(user_mail,user_regip,user_pas) values(#{user_mail},#{user_regip},#{user_pas})
+    </insert>
+    <insert id="addUser_info" parameterType="com.myblog.entity.User_info">
+     insert into user_info(user_id,user_name,user_img) values(#{user_id},#{user_name},#{user_img})
+    </insert>
+    <select id="getUserPasbyid" parameterType="int" resultType="com.myblog.dto.BasicUser">
+    select user_pas,user_mail,user_id from user where user_id=#{user_id}
+    </select>
+    <select id="getUserPasbymail" parameterType="String" resultType="com.myblog.dto.BasicUser">
+    select user_pas,user_mail,user_id from user where user_mail=#{user_mail}
+    </select>
+</mapper>
