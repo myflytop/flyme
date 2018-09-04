@@ -11,6 +11,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into user(user_mail,user_regip,user_pas)
 		values(#{user_mail},#{user_regip},#{user_pas})
 	</insert>
+	<insert id="addRecordlogin" parameterType="com.myblog.entity.Blog_web_record">
+		insert into user_login_record(user_id,record_ip,record_dervice,record_brow)
+		values(#{record_user},#{record_ip},#{record_dervice},#{record_brow})
+	</insert>
 	<insert id="addUser_info" parameterType="com.myblog.entity.User_info">
 		insert into user_info(user_id,user_name,user_img)
 		values(#{user_id},#{user_name},#{user_img})

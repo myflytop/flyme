@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="utf-8" />
-		<title></title>
+		<title>FLYTOP主页</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link rel="stylesheet" href="layui/css/layui.css" />
 		<link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css" />
@@ -334,9 +334,10 @@
 		<!--   模板结束-->
 		<!--index博文列表模板-->
 		<script id="blogtext" type="text/html">
-			{{# layui.each(mytitles,function(index,mytitle){ }}
-			<div class="layui-col-md12">
+       <div class="layui-col-md12">
 				<div class="layui-row  main-body-con">
+			{{# if(mytitles.length>0)
+                 {layui.each(mytitles,function(index,mytitle){ }}
 					<div class="layui-col-md4 layui-col-xs4 con-img">
 						<a href="searchArticleNew.html?article_id={{mytitle.article_id}}"><img src="{{mytitle.article_img_brief}}" /></a>
 						<span class="sort"><a href="searchArticleNew.html?sort_article_id={{mytitle.sort_article_id}}">{{mytitle.sort_article_name}}</a></span>
@@ -357,9 +358,14 @@
 							</span>
 						</div>
 					</div>
-				</div>
-			</div>
 			{{# });}}
+
+            {{# }else {}}
+
+              <span >未找到相关数据</span>
+          {{#  }}}
+             	</div>
+			</div>
 		</script>
 		<script type="text/javascript" src="layui/layui.js"></script>
 		<script type="text/javascript" src="js/jquery3.2.1.js"></script>

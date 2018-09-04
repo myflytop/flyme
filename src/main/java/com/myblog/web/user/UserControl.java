@@ -161,7 +161,6 @@ public class UserControl {
 		// 得到当前正在执行的主题
 		Subject currentUser = SecurityUtils.getSubject();
 		// 如果存在则覆盖
-
 		if (currentUser.isAuthenticated()) {
 			// 退出当前浏览器存在的认证用户
 			currentUser.logout();
@@ -173,7 +172,7 @@ public class UserControl {
 			currentUser.getSession().setAttribute("loginType", USER_LOGIN_TYPE);
 			// 执行登陆
 			currentUser.login(customizedToken);
-			userService.upUserLoginIp(Integer.parseInt(currentUser.getPrincipal()==null?"":currentUser.getPrincipal().toString()) , CusAccessObjectUtil.getIpAddress(request));
+			userService.adduser_recordlogin(WebRecordUtils.getAgent(request, getUser()));
 			/*removeSession(String.valueOf(currentUser.getPrincipal()));*/
 			re = ReturnUtils.basicReturn(0, "loginSuccess", currentUser.getPrincipal());
 
@@ -217,7 +216,7 @@ public class UserControl {
 	public @ResponseBody String upUserHeard(@RequestParam("user_id") int user_id,@RequestParam("user_img") MultipartFile user_img, HttpServletRequest request) throws IOException {
 		{  JSONObject jsonObject = new JSONObject();
 			String fileName="";
-			if(getUser()==user_id)
+			if(getUser()==user_id) {
 			if (user_img !=null &&!user_img.isEmpty()&&user_img.getSize()<524288) {
 				try {
 					String imgname=user_img.getOriginalFilename();
@@ -243,6 +242,7 @@ public class UserControl {
 					e.printStackTrace();
 				}
 			}
+			}
 			else
 			{jsonObject.put("msg", 200);
 			jsonObject.put("code", -1);
@@ -267,8 +267,10 @@ public class UserControl {
 	    System.err.println(userBasic);
 		if(userBasic.getUser_id()==getUser())
 		{
-		if(userService.upUser(userBasic)==1);
+		if(userService.upUser(userBasic)==1)
+		{
 		re=ReturnUtils.basicReturn(1, "修改成功",userService.getUserBasic(getUser()));
+		}
 		}
 		else {
 		re=ReturnUtils.basicReturn(0, "登陆不符",null);

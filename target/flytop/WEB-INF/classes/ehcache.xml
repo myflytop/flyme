@@ -29,7 +29,7 @@ The following properties are translated:
 user.home - User's home directory
 user.dir - User's current working directory
 java.io.tmpdir - Default temp file path -->
-    <diskStore path="java.io.tmpdir/shiro-spring-sample"/>
+    <diskStore path="java.io.tmpdir"/>
 
 
     <!--Default Cache configuration. These will applied to caches programmatically created through
@@ -73,7 +73,7 @@ java.io.tmpdir - Default temp file path -->
             diskPersistent="false"
             diskExpiryThreadIntervalSeconds="120"
             /> -->
-<defaultCache 
+      <defaultCache 
         maxElementsInMemory="1000" 
         maxElementsOnDisk="10000000"
         eternal="false" 
@@ -93,31 +93,61 @@ Answer - ehcache expired it due to the timeToIdle property set to 120 seconds.)
 diskPersistent=true since we want an enterprise session management feature - ability to use sessions after
 even after a JVM restart.  -->
 
-<cache name="authorizationCache"
-           maxElementsInMemory="10000"
-           eternal="true"
-           overflowToDisk="true"
-           diskPersistent="true"
-           diskExpiryThreadIntervalSeconds="600"/>
-    <!-- <cache name="shiro-activeSessionCache"
-           maxElementsInMemory="10000"
-           eternal="true"
-           overflowToDisk="true"
-           diskPersistent="true"
-           diskExpiryThreadIntervalSeconds="600"/> -->
-           <cache name="shiro-activeSessionCache"    
-       maxEntriesLocalHeap="10000"    
-       overflowToDisk="false"    
-       eternal="false"    
-       diskPersistent="false"    
-       timeToLiveSeconds="0"    
-       timeToIdleSeconds="0"    
-       statistics="true"/>   
+  
 
-    <cache name="org.apache.shiro.realm.SimpleAccountRealm.authorization"
-           maxElementsInMemory="100"
+    
+ <!-- 登录记录缓存 锁定10分钟 -->
+    <cache name="passwordRetryCache"
+           maxEntriesLocalHeap="2000"
            eternal="false"
-           timeToLiveSeconds="600"
-           overflowToDisk="false"/>
+           timeToIdleSeconds="3600"
+           timeToLiveSeconds="0"
+           overflowToDisk="false"
+           statistics="true">
+    </cache>
 
+    <cache name="authorizationCache"
+           maxEntriesLocalHeap="2000"
+           eternal="false"
+           timeToIdleSeconds="3600"
+           timeToLiveSeconds="0"
+           overflowToDisk="false"
+           statistics="true">
+    </cache>
+
+    <cache name="authenticationCache"
+           maxEntriesLocalHeap="2000"
+           eternal="false"
+           timeToIdleSeconds="3600"
+           timeToLiveSeconds="0"
+           overflowToDisk="false"
+           statistics="true">
+    </cache>
+
+    <cache name="shiro-activeSessionCache"
+           maxEntriesLocalHeap="2000"
+           eternal="false"
+           timeToIdleSeconds="3600"
+           timeToLiveSeconds="0"
+           overflowToDisk="false"
+           statistics="true">
+    </cache>
+
+    <cache name="shiro-kickout-session"
+           maxEntriesLocalHeap="2000"
+           eternal="false"
+           timeToIdleSeconds="3600"
+           timeToLiveSeconds="0"
+           overflowToDisk="false"
+           statistics="true">
+    </cache>
+    
+    <cache name="my-session"
+           maxEntriesLocalHeap="2000"
+           eternal="false"
+           timeToIdleSeconds="3600"
+           timeToLiveSeconds="0"
+           overflowToDisk="false"
+           statistics="true">
+    </cache>
 </ehcache>

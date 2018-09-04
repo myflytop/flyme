@@ -1,4 +1,9 @@
+body {
+				overflow-x: hidden;
+				background-image: url("../images/blueprint.png");
+			}
 /*导航样式开始*/
+
 			.top-nav {
 				position: fixed;
 				left: 0;
@@ -139,4 +144,10 @@
 
 		.myinput>div>input {
 			padding: 0;
+		}
+		.main-body-con {
+			background-color: white;
+			box-shadow: 0 2px 10px 0 rgba(0, 0, 0, .1);
+			border-radius: 5px;
+			padding: 10px;
 		}

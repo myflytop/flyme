@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="layui/css/layui.css" />
+		<link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css" />
+
+		<style>
+			thead>tr:nth-child(2)>th:last-child span {
+				display: inline-block;
+				height: 38px;
+				line-height: 30px;
+				padding: 0 18px;
+				background-color: #009688;
+				color: #fff;
+				white-space: nowrap;
+				text-align: center;
+				font-size: 14px;
+				border: none;
+				border-radius: 2px;
+				cursor: pointer;
+				-moz-user-select: none;
+				-webkit-user-select: none;
+				-ms-user-select: none
+			}
+			
+			thead>tr:nth-child(2)>th:last-child span:hover {
+				opacity: .8;
+				filter: alpha(opacity=80);
+				color: #fff
+			}
+		</style>
+
+	</head>
+
+	<body ondragstart="return false">
+		<br />
+		<div class="layui-row layui-col-space10">
+			<div class="layui-col-md8 layui-col-md-offset2">
+				<div class="demoTable layui-form">
+					<div class="layui-form-item" style="padding-left: 10px;padding-right: 10px;">
+						<div class="layui-form-item">
+							<label class="layui-form-label">文档分类名</label>
+							<div class="layui-input-block">
+								<input type="text" name="title" lay-verify="title" placeholder="请输入分类名" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">文档ID</label>
+							<div class="layui-input-block">
+								<input type="text" name="title" lay-verify="idverify" placeholder="请输入文档ID" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">用户ID</label>
+							<div class="layui-input-block">
+								<input type="text" name="title" lay-verify="idverify" placeholder="请输入用户ID" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button class="layui-btn" lay-submit lay-filter="sortform">查询</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md12">
+				<table id="docsSortTable" class="layui-hide" lay-filter="sortfilter"></table>
+			</div>
+		</div>
+
+		<script type="text/html" id="sortedit">
+			<div class="layui-btn-group">
+				<button class="layui-btn" lay-event="edit">编辑</button>
+				<button class="layui-btn" lay-event="del">删除</button>
+			</div>
+		</script>
+
+		<script type="text/javascript" src="layui/layui.js"></script>
+		<script type="text/javascript" src="js/jquery3.2.1.js"></script>
+		<script type="text/javascript" src="js/jquery.cookie.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/vue-resource.js"></script>
+		<script>
+			var sort;
+
+			//匹配字母汉字2-12位
+			function nosp(t) {
+
+				if(/^[\u0391-\uFFE5A-Za-z]{2,12}$/.test(t))
+					return false;
+				else
+					return true;
+			};
+			layui.use(['element', 'table', 'form'], function() {
+				var element = layui.element,
+					table = layui.table,
+					form = layui.form;
+
+				sort = {
+					dataSortrender: function() {
+						//初始化表格
+						table.render({
+							elem: '#docsSortTable',
+							url: 'bloger/user/docs/getDocsSorts.do',
+							cols: [
+								[{
+									title: '文档分类管理',
+									align: 'center',
+									colspan: 7,
+								}],
+								[ //标题栏
+									{
+										title: '分类ID',
+										field: 'docsSortid',
+										width: '10%',
+										sort: true,
+										rowspan: 3
+									} //rowspan即纵向跨越的单元格数
+									,
+									{
+										title: '用户ID',
+										field: 'userId',
+										width: '10%',
+										sort: true,
+										rowspan: 3
+									},
+									{
+										title: '分类状态',
+										field: 'docsSortstatus',
+										width: '10%',
+										rowspan: 3
+									}, {
+										title: '分类名',
+										field: 'docsSortname',
+										width: '15%',
+										rowspan: 3
+									}, {
+										title: '添加时间',
+										field: 'docsSorttime',
+										width: '20%',
+										rowspan: 3
+									}, {
+										title: '修改时间',
+										field: 'docsSortretime',
+										width: '20%',
+										rowspan: 3
+									}, {
+										title: '添加',
+										align: 'center',
+										width: '15%',
+										toolbar: '#sortedit',
+										colspan: 1
+									}
+								],
+								[{
+										title: '操作',
+										align: 'center',
+										colspan: 2
+
+									}
+
+								]
+							],
+							page: true,
+							limit: 10,
+							limits: [10, 20, 30],
+							id: 'sortReload',
+							done: function(res, curr, count) {
+
+								console.log(res);
+								gdata = res.data;
+								console.log(gdata);
+							}
+
+						});
+						//初始化table工具条
+						table.on("tool(sortfilter)", function(obj) {
+							var data = obj.data;
+							/*var docsSortstatus=data.docsSortstatus;
+							var msg;
+							if (docsSortstatus===0) {
+								docsSortstatus=1;
+							} else{
+								docsSortstatus=0;
+							}*/
+							if(obj.event === 'del') {
+								layer.confirm('确定要删除行么?', {
+									icon: 3,
+									title: '删除操作提示'
+								}, function(index) {
+									//删除
+									var del = sort.delSortData('get',{"docsSortid":data.docsSortid,"docsSortstatus":docs.docsSortstatus},'bloger/user/docs/delDocsDort.do');
+									if(del.code === 1) {
+										layer.msg('删除成功', {
+											icon: 1,
+											time: 2000 //2秒关闭（如果不配置，默认是3秒）
+										}, function() {
+											//do something
+											obj.del();
+											layer.close(index);
+										});
+										
+									} else if(del.code === 0) {
+										layer.msg('删除失败', {
+											icon: 1,
+											time: 2000 //2秒关闭（如果不配置，默认是3秒）
+										}, function() {
+											//do something
+											layer.close(index);
+										});
+									}
+
+								});
+							} else if(obj.event === 'edit') {
+								//修改框
+								layer.prompt({
+									formType: 0,
+									value: data.docsSortname, //文本框内的文字
+									title: '修改ID为' + data.docsSortid + '的分类名',
+									area: ['160px', '20px'], //自定义文本域宽高
+									cancel: function(index, layero) {
+										layer.closeAll();
+										return false;
+									}
+								}, function(value, index, elem) { //获取输入文本
+									//空格替换
+									value = value.replace(/\s/g, "");
+
+									if(nosp(value)) {
+										layer.open({
+											id: 'sorttip',
+											type: 4,
+											shade: 0,
+											time: 2000,
+											closeBtn: false,
+											content: ['2—12个字符的字母和汉字', elem] //数组第二项即吸附元素选择器或者DOM
+										});
+									} else {
+										var d={};
+										d.docsSortname=value;
+										d.docsSortid=data.docsSortid;
+										d.userId=10001;
+										var code=sort.editSortData('post','bloger/user/docs/editDocsSort.do',d).code;
+										if(code===1) {
+										    obj.update({
+										    	docsSortname: value
+										     });
+											layer.msg('修改成功');
+
+										} else if(code===0) {
+											layer.msg('修改失败');
+
+										}
+										layer.close(index);
+									}
+								});
+							}
+						});
+					},
+					dataSortReload: function(attrData) {
+						//重載表格
+						table.reload('sortReload', {
+							page: {
+								curr: 1 //重新从第 1 页开始
+							},
+							where: {
+								key: attrData //参数
+							}
+						});
+					},
+					delSortData: function(t, u, d) {
+						return sort.ajax(t, u, d);
+					},
+					editSortData: function(t, u, d) {
+						return sort.ajax(t, u, d);
+					},
+					addSortData: function() {
+						//添加按钮
+						$(document).on('click', 'thead>tr:nth-child(2)>th:last-child span', function() {
+							//触发事件
+							layer.open({
+								type: 1,
+								title: false //不显示标题栏
+									,
+								closeBtn: false,
+								area: '300px;',
+								shade: 0.8,
+								id: 'LAY_layuipro' //设定一个id，防止重复弹出
+									,
+								btn: ['添加', '退出'],
+								btnAlign: 'c',
+								moveType: 1 //拖拽模式，0或者1
+									,
+								content: '<div style="padding: 30px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;"><input type="txt" name="docsSortname" placeholder="标签名" class="layui-input" ></div>',
+								btn1: function(index, layero) {
+									var addobj = {};
+									var docsSortname = $.trim($("input[name='docsSortname']").val());
+									docsSortname.replace(/\s/g, "");
+									if(nosp(docsSortname)) {
+										layer.open({
+											id: 'mytip',
+											type: 4,
+											shade: 0,
+											time: 2000,
+											closeBtn: false,
+											content: ['2-12个字符的字母汉字', $("input[name='docsSortname']")] //数组第二项即吸附元素选择器或者DOM
+										});
+									} else {
+										layer.close(index);
+										addobj.docsSortname = docsSortname;
+										addobj.userId = 10001;
+										//暂定user_id 10001
+										var reData=sort.ajax("post", "bloger/user/docs/addDocsSort.do", addobj);
+										if(reData.code===1) {
+											/*  obj.del(); */
+											layer.msg('添加成功分类名为'+docsSortname+",分类id为"+reData.data+"的分类");
+
+										} else if(reData.code===0){
+											layer.msg('添加失败');
+
+										}
+										
+									}
+								},
+								end: function() {
+									
+								}
+							});
+
+						})
+					},
+					ajax: function(t, u, d) {
+                   var re;
+						$.ajax({
+							type: t,
+							url: u,
+							data: d,
+							async:false,
+							dataType: "json",
+							success: function(data) {
+								
+								re= data;
+							}
+						});
+               return re;
+					},
+					loadform: function() {
+						//自定义验证规则
+						form.verify({
+							title: function(value) {
+								if(value.length > 16) {
+									return '标题标题不能大于16个字符';
+								}
+							},
+							idverify: [/^[\d]{0,12}$/, 'ID不能大于12位,必须为数值型']
+						});
+						//监听提交
+						form.on('submit(sortform)', function(data) {
+							layer.alert(JSON.stringify(data.field), {
+								title: '最终的提交信息'
+							})
+							return false;
+						});
+					}
+
+				}
+				sort.loadform();
+				sort.dataSortrender();
+				sort.dataSortReload();
+				sort.addSortData();
+
+			});
+		</script>
+
+	</body>
+
+</html>

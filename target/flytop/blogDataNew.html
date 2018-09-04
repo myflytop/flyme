@@ -166,10 +166,10 @@
 
 				</li>
 				<li class="layui-nav-item ">
-					<a href=""><i class="fa fa-home fa-fw"></i>网站首页</a>
+					<a href="indexNew.html"><i class="fa fa-home fa-fw"></i>网站首页</a>
 				</li>
 				<li class="layui-nav-item layui-this">
-					<a href="indexNew.html"><i class="fa fa-book fa-fw"></i>博文专栏</a>
+					<a href="blogDataNew.html"><i class="fa fa-book fa-fw"></i>博文专栏</a>
 				</li>
 				<li class="layui-nav-item">
 					<a href=""><i class="fa fa-tags fa-fw"></i>教程专栏</a>
@@ -187,7 +187,7 @@
 		<!--导航结束-->
 
 		<!--内容区域开始-->
-		<div class="layui-row layui-col-space20 main-body" id="articleCon">
+		<div class="layui-row layui-col-space20 main-body" id="articleCon" style="display:none">
 			<!--路径导航开始-->
 			<div class="layui-col-md10 layui-col-md-offset1">
 				<blockquote class="layui-elem-quote layui-breadcrumb sitemap">
@@ -552,6 +552,7 @@
 					commends: []
 				},
 				mounted: function() {
+					
 					var vcom_this = this;
 					var art_id = parseInt(getQueryVariable('article_id'));
 					articleinit.commendbox1('commendbox1');
@@ -562,7 +563,7 @@
 							emulateJSON: true
 						}).then(function(response) {
 							console.log(response);
-							
+				
 							var myUserArticle = response.body.myUserArticle;
 							if(myUserArticle!=null)
 								{
@@ -649,7 +650,7 @@
 						
 						console.log('参数错误');
 					}
-					
+					 $("#articleCon").show();
 				}
 				,
 				filters: {  
@@ -802,9 +803,10 @@
                  	data:{'article_id':getarticle.article_id,'user_id':user_id},
                  	success:function(data)
                  	{   if(data.code==1)
-                 		{
+                 		{getarticle.upvote_count++;
                  		$(".thumb-up>i").addClass("icolor");
                  		$(".thumb-up>i").attr("title","已赞");
+                 		
                  		}
                  		console.log(data);
                  	},

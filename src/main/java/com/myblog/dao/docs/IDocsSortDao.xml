@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myblog.dao.docs.IDocsSortDao">
+	<resultMap id="DocsSortMap" type="com.myblog.entity.DocsSort">
+		<id column="docs_sortid" property="docsSortid" />
+		<result column="docs_sortname" property="docsSortname"
+			jdbcType="VARCHAR" />
+		<result column="docs_sorttime" property="docsSorttime"
+			jdbcType="TIMESTAMP" />
+		<result column="docs_sortretime" property="docsSortretime"
+			jdbcType="TIMESTAMP" />
+		<result column="user_id" property="userId" />
+		<result column="docs_sortstatus" property="docsSortstatus"
+			jdbcType="TINYINT" />
+	</resultMap>
+	<insert id="addDocsSort" parameterType="com.myblog.entity.DocsSort">
+		<selectKey keyProperty="docsSortid" resultType="Long" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into docs_sort(docs_sortname,user_id)
+		values(#{docsSortname},#{userId})
+
+	</insert>
+	<update id="delDocsSort">
+		update docs_sort set
+		docs_sortstatus=#{docsSortstatus} where
+		docs_sortid=#{docsSortid}
+	</update>
+	<update id="updateDocsSort" parameterType="com.myblog.entity.DocsSort">
+		update docs_sort set docs_sortname=#{docsSortname}
+		where
+		docs_sortid=#{docsSortid}
+	</update>
+	<select id="getDocsSorts" resultMap="DocsSortMap" parameterType="com.myblog.entity.DocsSort">
+		select docs_sortid
+		,docs_sortname
+		,docs_sortretime
+		,docs_sorttime
+		,user_id from docs_sort
+		<where>
+			<if test="docsSortname!=null">
+				docs_sortname like CONCAT('%', #{docsSortname},'%')
+			</if>
+			<if test="docsSortid">
+				AND docs_sortid like CONCAT('%', #{docsSortid},'%')
+			</if>
+			<if test="userId">
+				AND user_id like CONCAT('%', #{userId},'%')
+			</if>
+		</where>
+	</select>
+   <select id="countSortName" resultType="int">
+   select count(docs_sortname) from docs_sort where docs_sortid=#{docsSortid} and user_id=#{userId}
+   </select>
+   
+</mapper>

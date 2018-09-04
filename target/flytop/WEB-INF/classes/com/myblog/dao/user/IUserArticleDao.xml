@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.myblog.dao.user.IUserArticleDao" >
 	<select id="getArticleTitle" resultType="com.myblog.dto.user.MyUserArticle_title" parameterType="com.myblog.dto.args.SearchArtArg">
-	SELECT * FROM blog.mytitle_userview <where>
+	SELECT * FROM flytop.mytitle_userview <where>
 	  <if test="searchArg!=null">
 	  article_title like #{searchArg}
 	  </if>
@@ -35,7 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	update article_star set reading_count=reading_count+1 where article_id=#{article_id}
 	</update>
 	<insert id="addrtRoteRead" parameterType="com.myblog.entity.rote.ReadRote">
-	insert into read_rote(article_id,read_user,read_ip) value(#{article_id},#{user_id},#{read_ip})
+	insert into read_rote(article_id,read_user,read_ip,read_dervice,read_brow) value(#{article_id},#{user_id},#{read_ip},#{read_dervice},#{read_brow})
 	</insert>
 	<!-- Read End -->
 	<!-- Upvote Star -->

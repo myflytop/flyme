@@ -246,12 +246,12 @@
 			<li id="nav-login" class="layui-nav-item layui-layout-right" lay-unselect="" style="margin-right:80px;">
 
 				</li>
-			<li class="layui-nav-item layui-this">
+			<li class="layui-nav-item ">
 				<a href="indexNew.html">
 					<i class="fa fa-home fa-fw"></i>网站首页</a>
 			</li>
-			<li class="layui-nav-item">
-				<a href="">
+			<li class="layui-nav-item layui-this">
+				<a href="searchArticleNew.html">
 					<i class="fa fa-book fa-fw"></i>博文专栏</a>
 			</li>
 			<li class="layui-nav-item">
@@ -287,7 +287,7 @@
 		</div>
 		<!--路径导航结束-->
 		<!-- 左边内容开始-->
-		<div class="layui-col-md7 layui-col-md-offset1 main-body-left" id="main-body-left">
+		<div class="layui-col-md7 layui-col-md-offset1 main-body-left" id="main-body-left" style="display:none">
 			<div class="layui-row layui-col-space20">
 				<div class="layui-col-md12">
 					<div class="artseach layui-form">
@@ -344,7 +344,7 @@
 									<i class="fa fa-thumbs-up fa-fw"></i> {{mytitle.upvote_count}}</a>
 								</span>
 								<span class="comment">
-									<i class="fa fa-comment-o fa-fw"></i> {{mytitle.comment_count}}</a>
+									<i class="fa fa-comment-o fa-fw"></i> {{mytitle.commend_count}}</a>
 								</span>
 							</div>
 						</div>
@@ -640,7 +640,7 @@
 			laypage.render({
 				elem: 'atriclepage',
 				count: num,
-				limit: 4,
+				limit: 10,
 				layout: ['prev', 'page', 'next'],
 				jump: function (obj, first) {
 				var argtit=$("input[name=article-title]").val();
@@ -673,8 +673,10 @@
 						//第一次加载
 						if(g===1)
 							{
+							
 							mcount=data.count
 							pagrendy(mcount);
+							$("#main-body-left").show();
 							}
 						//当数据总数改变时从新加载
 						else if(mcount!=data.count)

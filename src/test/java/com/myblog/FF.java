@@ -9,6 +9,7 @@ import java.util.Map;
 import org.junit.Test;
 
 import com.myblog.util.BasicUtil;
+import com.myblog.util.WriteMdUtils;
 
 public class FF {
 
@@ -46,6 +47,10 @@ public void g() {
 	public void gtime() {
 		Date dt=new Date();
 		System.out.println(dt.getTime());
+	}
+	@Test
+	public void tsetWriteMd() {
+		WriteMdUtils.writreMd("E:\\x.md", "回家吃饭了", "utf-8", false);
 	}
 	
 }

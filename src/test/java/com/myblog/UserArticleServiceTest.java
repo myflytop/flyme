@@ -29,7 +29,7 @@ public class UserArticleServiceTest {
     }
     @Test
     public void gaddread() {
-    	userArticleService.addrtRead(new ReadRote(1, 5, "fff",  "fff", 16));
+    	userArticleService.addrtRead(new ReadRote(1, 5, "fff",  "fff", 16,"Adnerd","baidu"));
     
     }
     @Test

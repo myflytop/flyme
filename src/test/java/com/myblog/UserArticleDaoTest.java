@@ -40,7 +40,7 @@ public class UserArticleDaoTest {
    	}
     @Test
    	public void addrotertRead() {
-       System.out.println(userArticleDao.addrtRoteRead(new ReadRote(1, 5, "fff",  "fff", 16)));
+       System.out.println(userArticleDao.addrtRoteRead(new ReadRote(1, 5, "fff",  "fff", 16,"Anderd","baidu")));
    	}
     @Test
    	public void addrotertup() {

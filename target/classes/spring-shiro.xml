@@ -95,10 +95,15 @@
 		class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
 		<property name="securityManager" ref="securityManager" />
 	</bean>
-	<bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.MemorySessionDAO">
-		<!-- 用于生成会话ID，默认就是JavaUuidSessionIdGenerator，使用java.util.UUID生成 -->
-		<!-- <property name="sessionIdGenerator" value="sessionIdGenerator"/> -->
-	</bean>
+	 
+	 <!-- 会话DAO -->
+    <bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO">
+        <property name="activeSessionsCacheName" value="shiro-activeSessionCache"/>
+        <!-- 用于生成会话ID，默认就是JavaUuidSessionIdGenerator，使用java.util.UUID生成 -->
+		 <property name="sessionIdGenerator" ref="sessionIdGenerator"/>
+    </bean>
+   <!-- 会话ID生成器 -->
+    <bean id="sessionIdGenerator" class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator"/>
 	<!-- 自定义session监听器 -->
 	<bean id="recordFirst" class="com.myblog.httpsessionListener.RecordFirst"></bean>
 	<bean id="sessionManager"
@@ -112,8 +117,9 @@
 		<!-- 需要让此session可以使用该定时调度器进行检测 -->
 		<property name="sessionValidationSchedulerEnabled" value="true" />
 		<property name="sessionDAO" ref="sessionDAO" />
-		<property name="sessionIdCookie" ref="sessionIdCookie" />
 		<property name="sessionIdCookieEnabled" value="true" />
+		<property name="sessionIdCookie" ref="sessionIdCookie" />
+		
 	</bean>
 	<!-- 配置session的定时验证检测程序类，以让无效的session释放 -->
 	<!-- Shiro也提供了使用Quartz会话验证调度器,org.apache.shiro.session.mgt.quartz.QuartzSessionValidationScheduler,使用时需要导入shiro-quartz依赖 -->
@@ -125,7 +131,9 @@
 		<property name="sessionManager" ref="sessionManager" />
 	</bean>
 	<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
-		<constructor-arg name="name" value="meta.session.id" />
+		<constructor-arg value="sid"/>
+        <property name="httpOnly" value="true"/>
+        <property name="maxAge" value="-1"/>
 	</bean>
 
 	<!-- Define the Shiro Filter here (as a FactoryBean) instead of directly 

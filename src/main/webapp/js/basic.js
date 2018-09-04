@@ -146,12 +146,25 @@ layui.use(['element', 'form', 'laydate', 'upload'], function() {
 					'<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>'+
 					'</script>';	
 				}
-				else
+			else if(durl==="userinfo")
 				{
 					conv='<span id="' + durl + '"><'+durl+' v-bind:bloger="blogerData" v-bind:hobbys="mhobbys"></'+durl+'></span>';
 				}
+			else
+				{
+				conv='<span id="' + durl + '"><'+durl+'></'+durl+'><table class="layui-hide" id="usermanagementtable"></table></span>'
+				+'<script type="text/html" id="checklock">'
+				+'<input type="checkbox" name="user_lock" value="{{d.user_id}}" title="锁定" lay-filter="user_lockDemo" {{ d.user_lock==1 ? "checked" : "" }}>'
+				+'</script>'
+				+'<script type="text/html" id="usersexTpl">'
+				  +'<p>{{d.user_sex==1?"男":"女"}}</>'
+				+'</script>'
+				+'<script type="text/html" id="useridTpl">'
+				  +'<a  lay-event="getmore" href="javascript:void(0)" class="layui-table-link" title="查看更多">{{d.user_id}}</a>'
+				+'</script>';
+				}
 			element.tabAdd('demo', {
-				title:  dtitle //用于演示
+				title:  dtitle //于演示
 					,
 				content: conv ,
 				id: durl 

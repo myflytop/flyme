@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myblog.dao.IBlogerForUserDao">
+	<select id="getUser" resultType="com.myblog.dto.admin.AdUser"
+		parameterType="com.myblog.dto.args.AdUserArg">
+		select user.user_id,user_regtime as user_time,
+		user_lasttime,user_name,user_sex,user_signature,user_birthday,user_location,user_lock
+		from user inner join user_info
+
+		<where>
+
+			<if test="user_id != null or (user_name != null and user_name!='')">
+				(
+				<if test="user_id != null">
+					user.user_id like concat('%',#{user_id},'%')
+				</if>
+				<if test="user_name != null and user_name!=''">
+					or user_name like concat('%',#{user_name},'%')
+				</if>
+				)
+			</if>
+			<if test="user_lock == 1">
+				and user_lock = #{user_lock}
+			</if>
+			<if test="true">
+				AND user.user_id =user_info.user_id
+			</if>
+		</where>
+		<if test="oid==1||olasttime==1">
+			order by
+		</if>
+		<trim suffixOverrides=",">
+			<if test="oid==1">
+				user_id desc,
+			</if>
+			<if test="olasttime==1">
+				user_lasttime desc,
+			</if>
+		</trim>
+	</select>
+	<update id="upUserlock">
+		update user set user_lock=#{user_lock} where user_id=#{user_id}
+	</update>
+
+</mapper>

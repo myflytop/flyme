@@ -3,6 +3,7 @@ import org.apache.ibatis.javassist.runtime.Inner;
 
 import com.myblog.dto.BasicUser;
 import com.myblog.dto.user.UserBasic;
+import com.myblog.entity.Blog_web_record;
 import com.myblog.entity.User;
 
 public interface IUserService {
@@ -48,4 +49,10 @@ public UserBasic getUserBasic(int user_id);
  * @param userBasic
  */
 public int upUser(UserBasic userBasic);
+/**
+ * 添加用户浏览记录
+ * @param bl
+ * @return
+ */
+int adduser_recordlogin(Blog_web_record bl);
 }

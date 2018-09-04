@@ -287,9 +287,9 @@
 		</div>
 		<!--路径导航结束-->
 		<!-- 左边内容开始-->
-		<div class="layui-col-md7 layui-col-md-offset1 main-body-left" id="main-body-left">
-			<div class="layui-row layui-col-space20">
-				<div class="layui-col-md12">
+		<div class="layui-col-md7 layui-col-md-offset1 main-body-left" id="main-body-left" >
+			<div class="layui-row layui-col-space20"style="display:none" id="hel">
+				<div class="layui-col-md12" >
 					<div class="artseach layui-form">
 						<div class="layui-form-item">
 							<div class="layui-collapse" lay-accordion="">
@@ -301,7 +301,6 @@
 							</div>
 						</div>
 						<div class="layui-form-item">
-
 							<div class="layui-row">
 								<div class="layui-col-md4 layui-col-xs8 layui-col-md-offset4 layui-col-xs-offset1">
 									<input type="text" class="layui-input" name="article-title" placeholder="搜索" />
@@ -650,6 +649,7 @@
 						var da=getarg();
 						da.page=obj.curr;
 						getTitle(da,'user/basic/getArticleTitles.do');
+						
 						}
 					element.init();
 					form.render();
@@ -670,9 +670,11 @@
 					success: function (data, textStatus) {
 						console.log(data);
 						datainit.mytitles = data.data;
+
 						//第一次加载
 						if(g===1)
 							{
+							$("#hel").show();
 							mcount=data.count
 							pagrendy(mcount);
 							}
@@ -699,11 +701,11 @@
           	success:function(data)
           	{   console.log(data)
           		$.each(data.ArticleHot, function(index, obj) {
-          			 $("#hotArticle").append('<li><a href='+'"blogDataNew.html?article_id='+obj.article_id+'"><span >'+(index+1)+'</span>'+obj.article_name+'</a></li>'
+          			 $("#hotArticle").append('<li><a href='+'"blogDataNew.html?article_id='+obj.article_id+'"><span style="background:'+chooseColor(index)+'">'+(index+1)+'</span>'+obj.article_name+'</a></li>'
 							);
           		});
           		$.each(data.ArticleNice, function(index, obj) {
-          			 $("#readArticle").append('<li><a href='+'"blogDataNew.html?article_id='+obj.article_id+'"><span >'+(index+1)+'</span>'+obj.article_name+'</a></li>'
+          			 $("#readArticle").append('<li><a href='+'"blogDataNew.html?article_id='+obj.article_id+'"><span style="background:'+chooseColor(index)+'">'+(index+1)+'</span>'+obj.article_name+'</a></li>'
 						);
    		           });
           		
@@ -715,6 +717,27 @@
               console.log(err);
                 }
              });
+		function chooseColor(index) {
+            var color;
+            switch (index) {
+                case 0:
+                    color = "#FF0000";
+                    break;
+                case 1:
+                    color = "#FF3030";
+                    break;
+                case 2:
+                    color = "#FF4040";
+                    break;
+                case 4:
+                    color = "#FF4500";
+                    break;
+                default:
+                    color = "#FF6347";
+                    break;
+            }
+            return color;
+        }
 	</script>
 
 </body>

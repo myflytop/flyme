@@ -60,10 +60,6 @@ public class SortControl {
 			 oMap.put("code", "fail");
 			 
 		 }
-	  
-	  
-		
-		 
 		/*  sor.setData(sort_articleService.addSort(sort_article));*/
 		  JSONObject jsonObject=JSONObject.fromObject(oMap);
 		return jsonObject.toString();

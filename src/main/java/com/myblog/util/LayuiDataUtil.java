@@ -6,17 +6,17 @@ public class LayuiDataUtil<T> {
 	//消息
 	private String msg;
 	//总数
-	private int count;
+	private long count;
 	//数据
 	private List<T> data;
-	//状态码
+	//状态码  0成功 -1失败
 	private int code;
 	public LayuiDataUtil() {
 		// TODO Auto-generated constructor stub
 	}
 	
 
-	public LayuiDataUtil(int code, String msg, int count, List<T> data) {
+	public LayuiDataUtil(int code, String msg, long count, List<T> data) {
 		super();
 		this.code = code;
 		this.msg=msg;
@@ -36,11 +36,11 @@ public class LayuiDataUtil<T> {
 
 	
 
-	public int getCount() {
+	public long getCount() {
 		return count;
 	}
 
-	public void setCount(int count) {
+	public void setCount(long count) {
 		this.count = count;
 	}
 
@@ -64,6 +64,14 @@ public class LayuiDataUtil<T> {
 	public String toString() {
 		return "LayuiDataUtil [code=" + code + ", msg=" + msg + ", count=" + count + ", data=" + data + "]";
 	}
-
+    
+	public static LayuiDataUtil<?> ok()
+	{
+		return new LayuiDataUtil<>(0, "success", -1, null);
+	}
+	public static LayuiDataUtil<?> fail()
+	{
+		return new LayuiDataUtil<>(-1, "fail", -1, null);
+	}
 	
 }

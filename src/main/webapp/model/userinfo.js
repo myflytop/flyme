@@ -1,7 +1,4 @@
 
-/*var data = { counter: 5 };*/
-var data={"bloger_name":"张哈哈","bloger_profession":"[\"zhangsan\"]","bloger_address":"张家口","bloger_hobby":"[\"zhangsan\",\"zhangsanppp3\",\"zhang网二san3\",\"zhangsan3\",\"zhangsan3\",\"hhhhhhhhhhhhhhhhh\"]","bloger_nikename":"票琵琶","bloger_birthday":"2017-10-23","bloger_id":10001,"bloger_sex":1,"bloger_introduce":"撒大声地所多","bloger_regtime":"2017-10-20","bloger_imgurl":"7777"};
-
 Vue.component('userinfo', {
 	props: ['bloger','hobbys'],
 	template: '<ul class="layui-timeline">\
@@ -57,7 +54,7 @@ Vue.component('userinfo', {
 						</div>\
 					</form>\
 				</div>\
-				<div class="layui-col-md7">6\
+				<div class="layui-col-md7">\
 					<div>\
 						<img v-bind:src="bloger.bloger_imgurl" width="200" height="200" id="loadimg">\
 		                <button id="loadbtn" style="display:none">ok\
@@ -100,12 +97,7 @@ Vue.component('userinfo', {
 	</li>\
 </ul>',
  
-	data: function() {
-		return {
-			counter: data
-		}
-	}
-		,methods:{
+ methods:{
 		addhobby:function(event){
 		layer.open({
         type: 1
@@ -273,8 +265,7 @@ $.ajax({
 					
 					for(var o in data.field)
 					{
-						console.log(o);
-						console.log(data.field[o]);
+						
 						if(data.field[o]==$("#myform").find("[name="+o+"]").attr("placeholder"))
 						{
 							delete data.field[o];

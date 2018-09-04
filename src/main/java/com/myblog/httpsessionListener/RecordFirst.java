@@ -2,7 +2,7 @@ package com.myblog.httpsessionListener;
 
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.SessionListener;
-import org.apache.shiro.subject.support.DefaultSubjectContext;
+
 
 public class RecordFirst implements SessionListener{
 

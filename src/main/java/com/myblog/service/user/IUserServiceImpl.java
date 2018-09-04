@@ -1,5 +1,4 @@
 package com.myblog.service.user;
-
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -7,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.myblog.dao.user.IUserDao;
 import com.myblog.dto.BasicUser;
 import com.myblog.dto.user.UserBasic;
+import com.myblog.entity.Blog_web_record;
 import com.myblog.entity.User;
 import com.myblog.entity.User_info;
 @Service("userService")
@@ -87,6 +87,13 @@ public class IUserServiceImpl implements IUserService {
 	public int upUser(UserBasic userBasic) {
 		// TODO Auto-generated method stub
 		return userDao.upUser(userBasic);
+	}
+	@Override
+	public int adduser_recordlogin(Blog_web_record bl) {
+		// TODO Auto-generated method stub
+		userDao.upUserLoginIp(Integer.valueOf(bl.getRecord_user()), bl.getRecord_ip());
+		 
+		return userDao.addRecordlogin(bl);
 	}
 
 }

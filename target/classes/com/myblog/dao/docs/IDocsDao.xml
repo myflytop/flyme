@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myblog.dao.docs.IDocsDao">
+	<resultMap id="DocsMap" type="com.myblog.entity.Docs">
+		<id column="docs_id" property="docsId" />
+		<result column="docs_title" property="docsTitle" jdbcType="VARCHAR" />
+		<result column="docs_time" property="docsTime" jdbcType="TIMESTAMP" />
+		<result column="docs_retime" property="docsRetime" jdbcType="TIMESTAMP" />
+		<result column="docs_sort" property="docsSort" />
+		<result column="user_id" property="userId" />
+		<result column="docs_imgbrief" property="docsImgbrief"
+			jdbcType="VARCHAR" />
+		<result column="docs_conbrief" property="docsConbrief"
+			jdbcType="VARCHAR" />
+		<result column="docs_status" property="docsStatus" jdbcType="TINYINT" />
+	</resultMap>
+	<insert id="addDocs" parameterType="com.myblog.entity.Docs">
+		insert into
+		docs(docs_title,docs_sort,user_id,docs_imgbrief
+		,docs_conbrief)
+		values(#{docsTitle},#{docsSort},#{userId},#{docsImgbrief},#{docsConbrief})
+	</insert>
+	<update id="delDocs">update docs set docs_status=#{docsStatus} where
+		docs_id=#{docsId}
+	</update>
+	<update id="updateDocs" parameterType="com.myblog.entity.Docs">
+		update docs
+		<trim prefix="set" suffixOverrides=",">
+			<if test="docsTitle!=null">
+				docs_title=#{docsTitle},
+			</if>
+			<if test="docsSort!=null">
+				docs_sort=#{docsSort},
+			</if>
+			<if test="docsImgbrief!=null">
+				docs_imgbrief=#{docsImgbrief},
+			</if>
+			<if test="docsConbrief!=null">
+				docs_conbrief=#{docsConbrief},
+			</if>
+		</trim>
+		where docs_id=#{docsId}
+	</update>
+	<select id="getDocs" parameterType="com.myblog.entity.Docs"
+		resultMap="DocsMap">
+		select docs_id
+		,docs_title
+		,docs_time
+		,docs_retime
+		,docs_sort
+		,user_id
+		,docs_imgbrief
+		,docs_conbrief
+		,docs_status
+		from docs <where>
+		<if test="docsTitle!=null">
+		docs_title like CONCAT('%', #{docsTitle},'%')
+		</if>
+		<if test="docsConbrief!=null">
+		OR docs_conbrief CONCAT('%', #{docsConbrief},'%')
+		</if>
+		<if test="docsId!=null">
+		AND docs_id CONCAT('%', #{docsId},'%')
+		</if>
+		<if test="userId!=null">
+		AND user_id like CONCAT('%', #{userId},'%')
+		</if>
+		</where>
+
+	</select>
+</mapper>

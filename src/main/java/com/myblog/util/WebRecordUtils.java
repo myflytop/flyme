@@ -37,6 +37,6 @@ public class WebRecordUtils {
     			bl.setRecord_user(String.valueOf(user_id));
     	 
     	System.err.println(bl);
-    	return null;
+    	return bl;
     }
 }

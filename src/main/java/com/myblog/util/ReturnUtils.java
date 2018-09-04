@@ -8,7 +8,7 @@ import net.sf.json.JSONObject;
 public class ReturnUtils {
 	    /**
 	     * ajax 数据返回
-	     * @param code 返回码 1 请求成功 -1 用户未登录  -2 用户被踢出
+	     * @param code 返回码 0请求失败,1 请求成功 ,-1 用户未登录  ,-2 用户被踢出  
 	     * @param msg  返回消息
 	     * @param object  返回数据
 	     * @return
@@ -66,4 +66,5 @@ public class ReturnUtils {
            	  map.put("data", object);	 
        	 return map;
         }
+         
 }

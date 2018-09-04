@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myblog.dao.docs.IDocsCommentDao">
+<resultMap id="DocsCommentMap" type="com.myblog.entity.DocsComment" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="comment_id" property="commentId" jdbcType="BIGINT" />
+    <result column="comment_status" property="commentStatus"  />
+    <result column="comment_order" property="commentOrder"  />
+    <result column="is_parent" property="isParent" jdbcType="TINYINT" />
+    <result column="comment_created" property="commentCreated" jdbcType="TIMESTAMP" />
+    <result column="comment_updated" property="commentUpdated" jdbcType="TIMESTAMP" />
+    <result column="comment_con" property="commentCon" jdbcType="VARCHAR" />
+    <result column="comment_u1id" property="commentU1id"  />
+    <result column="comment_u2id" property="commentU2id"  />
+    
+  </resultMap>
+</mapper>

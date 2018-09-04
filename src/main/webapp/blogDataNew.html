@@ -187,7 +187,7 @@
 		<!--导航结束-->
 
 		<!--内容区域开始-->
-		<div class="layui-row layui-col-space20 main-body" id="articleCon">
+		<div class="layui-row layui-col-space20 main-body" id="articleCon" style="display:none">
 			<!--路径导航开始-->
 			<div class="layui-col-md10 layui-col-md-offset1">
 				<blockquote class="layui-elem-quote layui-breadcrumb sitemap">
@@ -203,19 +203,19 @@
 				<div class="layui-row layui-col-space20" >
 					<div class="layui-col-md12">
 						<div class="main-body-con">
-							<h2 v-html="article_title">标题</h2>
+							<h2 v-html="article_title"></h2>
 							<div class="article-detail-info">
 								<span class="date">
                                  <i class="fa fa-clock-o fa-fw"></i>
-                                 <span v-html="article_time">2017年10月02日</span>
+                                 <span v-html="article_time"></span>
 								</span>
 								<span class="user-blog">
                                  <i class="fa fa-user fa-fw"></i>
-                                 <span v-html="bloger_name">汪汪汪</span>
+                                 <span v-html="bloger_name"></span>
 								</span>
 								<span class="views">
                                  <i class="fa fa-eye fa-fw"></i>
-                                 <span v-html="reading_count">2,199</span>
+                                 <span v-html="reading_count"></span>
 								</span>
 							</div>
 							<div id="test-editormd-view2">
@@ -476,7 +476,6 @@
 				return(false);
 			}
 			var dologin;
-			
 			layui.use(['element', 'form', 'layer', 'laytpl','layedit'], function() {
 				var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
 				var layer = layui.layer;
@@ -552,6 +551,7 @@
 					commends: []
 				},
 				mounted: function() {
+					
 					var vcom_this = this;
 					var art_id = parseInt(getQueryVariable('article_id'));
 					articleinit.commendbox1('commendbox1');
@@ -562,7 +562,7 @@
 							emulateJSON: true
 						}).then(function(response) {
 							console.log(response);
-							
+				
 							var myUserArticle = response.body.myUserArticle;
 							if(myUserArticle!=null)
 								{
@@ -629,7 +629,7 @@
 								 
 							  }
 							else{
-								$("#commendMsg").append("<div style='font-size:30px;width:400px;margin:0 auto;padding-bottom:5px;padding-top:15px'>必须登陆才可以评论！<span style='padding-left:20px;color:red;font-size:20px'><a href='javascript:void(0)' onclick='dologin.login()'>登陆<a></span></div>");
+								$("#commendMsg").append("<div style='font-size:30px;width:400px;margin:0 auto;padding-bottom:5px;padding-top:15px'>登陆评论！<span style='padding-left:20px;color:red;font-size:20px'><a href='javascript:void(0)' onclick='dologin.login()'>登陆<a></span></div>");
 								
 							}
 							
@@ -649,7 +649,7 @@
 						
 						console.log('参数错误');
 					}
-					
+					 $("#articleCon").show();
 				}
 				,
 				filters: {  

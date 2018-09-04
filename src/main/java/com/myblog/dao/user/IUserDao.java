@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.myblog.dto.BasicUser;
 import com.myblog.dto.user.UserBasic;
+import com.myblog.entity.Blog_web_record;
 import com.myblog.entity.User;
 import com.myblog.entity.User_info;
 
@@ -20,6 +21,12 @@ public int countMail(String mail);
 	 * @return
 	 */
 public int addUser(User user);
+/**
+ * 记录用户登录
+ * @param bl
+ * @return
+ */
+public int addRecordlogin(Blog_web_record bl);
 /**
  * 获取用户信息
  * @param user_info

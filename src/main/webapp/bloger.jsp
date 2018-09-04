@@ -5,13 +5,23 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>FLYTOP</title>
+		<meta htatp-equiv="X-UA-Compatible" content="IE=edge">
+		<title>FLYTOP 后台管理</title>
 		<link rel="shortcut icon" href="img/mylog.ico" type="image/x-icon">
 		<link rel="stylesheet" href="./layui/css/layui.css">
-		<link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		<link href="font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
         <script src="model/loadcss.js"></script>
-    
+             <style type="text/css">
+             body{
+             overflow-y:hidden;
+             }
+				.layui-tab-title li:first-child>.layui-tab-close {
+					display: none;
+				}
+				#admi-con>div{
+				height:auto;
+				padding-bottom:50px;}
+			</style>
 	</head>
 
 	<body>
@@ -34,6 +44,9 @@
 					</li>
 					<li class="layui-nav-item">
 						<a href="">个人中心<span class="layui-badge-dot"></span></a>
+					</li>
+					<li class="layui-nav-item">
+						<a href="logout">退出</a>
 					</li>
 					<!-- <li class="layui-nav-item">
 						<a href="javascript:;">
@@ -70,6 +83,17 @@
 								</dd>
 								<dd>
 									<a href="javascript:;" data-url="websettings">站点设置</a>
+								</dd>
+							</dl>
+						</li>
+						<li class="layui-nav-item">
+							<a href="javascript:;">用户管理</a>
+							<dl class="layui-nav-child">
+								<dd>
+									<a href="javascript:;" data-url="usermanagement">查看用户</a>
+								</dd>
+								<dd>
+									<a href="javascript:;" data-url="usemsgmanagement">消息管理</a>
 								</dd>
 							</dl>
 						</li>
@@ -112,30 +136,28 @@
 				
 			</div>
 
-			<style type="text/css">
-				.layui-tab-title li:first-child>.layui-tab-close {
-					display: none;
-				}
-			</style>
-			<div class="layui-tab layui-tab-card layui-body"  lay-filter="demo" id="admin-body" lay-allowClose="true" style="margin: 0;bottom: 0;">
+			<script src="js/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
+			<div class="layui-tab layui-tab-card layui-body"  lay-filter="demo" id="admin-body" lay-allowClose="true" style="margin: 0;bottom: 0;overflow-y:hidden;">
 				<ul class="layui-tab-title">
 					<li class="layui-this" lay-id="u0">基本介绍</li>
-				</ul>
-				<script src="js/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
-				<div class="layui-tab-content" style="overflow:auto;" id="admi-con" >
+				</ul>	
+				<div class="layui-tab-content"  id="admi-con" style="overflow:auto">
 					<div class="layui-tab-item layui-show" id="result">
-						<!--<iframe src="index.html" style="width: 100%;bottom: 0; display:inline-flex"></iframe>-->
+						<iframe src="info.html" style="width: 100%;bottom: 0;height:1000px;border:none"></iframe>
 
 					</div>
-					<script type="text/javascript">
+					</div>
+		</div>
+		</div>
+					<!-- <script type="text/javascript">
 						$(document).ready(function() {
 
 							$.get("info.html", function(data) {
 								$("#result").html(data);
 							});
 						});
-					</script>
-		</div>
+					</script> -->
+		
 		<script src="./layui/layui.js"></script>
 		<script src="js/vue.js"></script>
 		<script src="js/vue-resource.js"></script>

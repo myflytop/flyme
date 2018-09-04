@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.myblog.entity.Blog_web_record;
 import com.myblog.entity.User;
 import com.myblog.service.user.IUserServiceImpl;
 import com.myblog.util.BasicUtil;
@@ -38,5 +39,14 @@ public class UserServiceTest {
     @Test
     public void ff() {
     	System.out.println(Integer.parseInt(null));
+    }
+    @Test
+    public void fkkf() {
+    	Blog_web_record bl=new Blog_web_record();
+    	bl.setRecord_user("4");
+    	bl.setRecord_ip("record_ip");
+    	bl.setRecord_dervice("record_dervice");
+    	bl.setRecord_brow("record_brow");
+		System.out.println(userService.adduser_recordlogin(bl));
     }
 }

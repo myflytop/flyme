@@ -11,6 +11,7 @@ import org.apache.shiro.web.util.WebUtils;
 
 import com.myblog.util.CusAccessObjectUtil;
 import com.myblog.util.ReturnUtils;
+import com.myblog.util.WebRecordUtils;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -28,15 +29,21 @@ import java.util.LinkedList;
  */
 public class KickoutSessionControlFilter extends AccessControlFilter {
     
-    private String kickoutUrl; //踢出后到的地址
-    private boolean kickoutAfter = false; //踢出之前登录的/之后登录的用户 默认踢出之前登录的用户
+    static String kickoutUrl; //踢出后到的地址
+    public static String getKickoutUrl() {
+		return kickoutUrl;
+	}
+
+	public static void setKickoutUrl(String kickoutUrl) {
+		KickoutSessionControlFilter.kickoutUrl = kickoutUrl;
+	}
+
+	private boolean kickoutAfter = false; //踢出之前登录的/之后登录的用户 默认踢出之前登录的用户
     private int maxSession = 1; //同一个帐号最大会话数 默认1
     private SessionManager sessionManager;
     private Cache<String, Deque<Serializable>> cache;
 
-    public void setKickoutUrl(String kickoutUrl) {
-        this.kickoutUrl = kickoutUrl;
-    }
+   
 
     public void setKickoutAfter(boolean kickoutAfter) {
         this.kickoutAfter = kickoutAfter;
@@ -62,17 +69,23 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
         System.err.println("KickoutSessionControlFilter");
+        
     	Subject subject = getSubject(request, response);
-        if(!subject.isAuthenticated() && !subject.isRemembered()) {
-            //如果没有登录，直接进行之后的流程
+    	//如果没有登录，直接进行之后的流程
+        if(!subject.isAuthenticated() && !subject.isRemembered()) {  
             return true;
         }
-
+         
+        /*用户已经认证往下走*/
+        
         Session session = subject.getSession();
+        //获取认证用户
         String username = String.valueOf( subject.getPrincipal());
+        //获取认证用户
         Serializable sessionId = session.getId();
+        
 
-        //TODO 同步控制
+        //TODO 会先从第一个cacheManager中查找有没有cacheName的cache，如果没有接着查找第二个，如果最后找不到，因为fallbackToNoOpCache=true，那么将返回一个NOP的Cache否则返回null。
         Deque<Serializable> deque = cache.get(username);
         if(deque == null) {
             deque = new LinkedList<Serializable>();
@@ -126,7 +139,11 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
             
             return false;
         }
-
+        //用户没有登陆，用户仅一个登陆
+        if(true)
+        {   WebRecordUtils.getAgent((HttpServletRequest)request,Integer.valueOf(username));
+        }
+     
         return true;
     }
 }

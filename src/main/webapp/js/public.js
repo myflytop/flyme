@@ -125,7 +125,7 @@ var initindex = {
 						layer.msg("登陆成功！");
 						$.cookie('ucookie', data.data);
 
-						setInterval(function() {
+						setTimeout(function() {
 							window.location.reload();
 						}, 1000);
 						/*layer.closeAll();
@@ -133,7 +133,7 @@ var initindex = {
 
 					} else {
 						layer.msg("登陆失败");
-						setInterval(function() {
+						setTimeout(function() {
 							window.location.reload();
 						}, 1000);
 					}
@@ -169,7 +169,7 @@ var initindex = {
 						eqcode.removeClass("layui-btn-disabled");
 						eqcode.attr('disabled', false);
 					} else {
-						setInterval(function() {
+						setTimeout(function() {
 							window.location.reload();
 						}, 1000);
 					}
@@ -209,7 +209,7 @@ var initindex = {
 
 					} else {
 						layer.msg("验证失败！");
-						setInterval(function() {
+						setTimeout(function() {
 							window.location.reload();
 						}, 1000);
 					}
@@ -259,7 +259,7 @@ var initindex = {
 					} else {
 						layer.msg("注册失败！");
 					}
-					setInterval(function() {
+					setTimeout(function() {
 						window.location.reload();
 					}, 1000);
 				},

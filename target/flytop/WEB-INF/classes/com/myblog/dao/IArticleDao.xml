@@ -18,9 +18,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	select * from article where article_id=#{article_id}
 	</select>
 	<select id="getArticleList" parameterType="com.myblog.dto.args.ArticleArg" resultType="com.myblog.dto.MyArticle"> 
-	select * from blog.mytitle_view  <where> 
+	select * from flytop.mytitle_view  <where> 
     <if test="article_id != null">
-         article_id = #{article_id}
+         article_id like concat('%',#{article_id},'%')
     </if> 
     <if test="article_title != null">
         AND article_title Like #{article_title}

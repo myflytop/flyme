@@ -15,7 +15,7 @@
 	<!-- 1. 配置 SecurityManager! 安全管理器 -->
 
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-		
+
 		<!-- 自定义realm选择器 -->
 		<property name="authenticator" ref="authenticator"></property>
 		<!-- 可以配置多个Realm，其实会把realms属性赋值给ModularRealmAuthenticator的realms属性 -->
@@ -25,11 +25,11 @@
 				<ref bean="adminRealm" />
 			</list>
 		</property>
+		<!-- 配置session管理器 -->
 		<property name="sessionManager" ref="sessionManager" />
-      <!-- 缓存 -->
+		<!-- 缓存 -->
 		<property name="cacheManager" ref="cacheManager" />
 	</bean>
-
 	<!-- 2. 配置 CacheManager. 2.1 需要加入 ehcache 的 jar 包及配置文件. -->
 	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
 		<property name="cacheManagerConfigFile" value="classpath:ehcache.xml" />
@@ -72,7 +72,7 @@
 				<property name="hashIterations" value="2"></property>
 			</bean>
 		</property>
-		
+
 	</bean>
 
 	<!-- ========================================================= Shiro Spring-specific 
@@ -95,21 +95,46 @@
 		class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
 		<property name="securityManager" ref="securityManager" />
 	</bean>
-	<bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.MemorySessionDAO" >
-    <!-- 用于生成会话ID，默认就是JavaUuidSessionIdGenerator，使用java.util.UUID生成 -->  
-    <!-- <property name="sessionIdGenerator" value="sessionIdGenerator"/>  -->
-	
-	</bean>
+	 
+	 <!-- 会话DAO -->
+    <bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO">
+        <property name="activeSessionsCacheName" value="shiro-activeSessionCache"/>
+        <!-- 用于生成会话ID，默认就是JavaUuidSessionIdGenerator，使用java.util.UUID生成 -->
+		 <property name="sessionIdGenerator" ref="sessionIdGenerator"/>
+    </bean>
+   <!-- 会话ID生成器 -->
+    <bean id="sessionIdGenerator" class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator"/>
+	<!-- 自定义session监听器 -->
+	<bean id="recordFirst" class="com.myblog.httpsessionListener.RecordFirst"></bean>
 	<bean id="sessionManager"
 		class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+		<!-- 配置session监听器 -->
+		<property name="sessionListeners" ref="recordFirst" />
+		<!-- 定义的是全局的session会话超时时间，此操作会覆盖web.xml文件中的超时时间配置 -->
+		<property name="globalSessionTimeout" value="1800000" />
+		<!-- 定义要使用的无效的Session定时调度器 -->
+		<property name="sessionValidationScheduler" ref="sessionValidationScheduler" />
+		<!-- 需要让此session可以使用该定时调度器进行检测 -->
+		<property name="sessionValidationSchedulerEnabled" value="true" />
 		<property name="sessionDAO" ref="sessionDAO" />
-		 <property name="sessionIdCookie" ref="sessionIdCookie"/>
-		  <property name="sessionIdCookieEnabled" value="true"/>
+		<property name="sessionIdCookieEnabled" value="true" />
+		<property name="sessionIdCookie" ref="sessionIdCookie" />
+		
 	</bean>
-
-	 <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie"> 
-		<constructor-arg name="name" value="meta.session.id"/>
-	 </bean> 
+	<!-- 配置session的定时验证检测程序类，以让无效的session释放 -->
+	<!-- Shiro也提供了使用Quartz会话验证调度器,org.apache.shiro.session.mgt.quartz.QuartzSessionValidationScheduler,使用时需要导入shiro-quartz依赖 -->
+	<bean id="sessionValidationScheduler"
+		class="org.apache.shiro.session.mgt.quartz.QuartzSessionValidationScheduler">
+		<!-- 设置session的失效扫描间隔，单位为毫秒 -->
+		<property name="sessionValidationInterval" value="600000" />
+		<!-- 随后还需要定义有一个会话管理器的程序类的引用 -->
+		<property name="sessionManager" ref="sessionManager" />
+	</bean>
+	<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+		<constructor-arg value="sid"/>
+        <property name="httpOnly" value="true"/>
+        <property name="maxAge" value="-1"/>
+	</bean>
 
 	<!-- Define the Shiro Filter here (as a FactoryBean) instead of directly 
 		in web.xml - web.xml uses the DelegatingFilterProxy to access this bean. 
@@ -124,12 +149,13 @@
 		<property name="loginUrl" value="/login.html" />
 		<property name="successUrl" value="/bloger.jsp" />
 		<property name="unauthorizedUrl" value="/unauthorized.jsp" />
-        <property name="filters">
-        <map>
-            <entry key="shiroLoginAdminFilter" value-ref="shiroLoginAdminFilter" />
-            <entry key="shiroLoginUserFilter" value-ref="shiroLoginUserFilter" />
-        </map>
-        </property>
+		<property name="filters">
+			<map>
+				<entry key="shiroLoginAdminFilter" value-ref="shiroLoginAdminFilter" />
+				<entry key="shiroLoginUserFilter" value-ref="shiroLoginUserFilter" />
+				<entry key="kickout" value-ref="kickoutSessionControlFilter" />
+			</map>
+		</property>
 		<!-- <property name="filterChainDefinitionMap" ref="filterChainDefinitionMap"></property> -->
 
 		<!-- 配置哪些页面需要受保护. 以及访问这些页面需要的权限. 1). anon 可以被匿名访问 2). authc 必须认证(即登录)后才可能访问的页面. 
@@ -137,21 +163,33 @@
 
 		<property name="filterChainDefinitions">
 			<value>
-				/login.jsp = anon
-				/bloger.jsp=authc,roles[admin]
-			    /bloger/**=shiroLoginAdminFilter,authc,roles[admin]
-                /user/basic/add*.do=shiroLoginUserFilter,authc,roles[user]
-                /user/personal/**=shiroLoginUserFilter,authc,roles[user]
-                /personalNew.html=shiroLoginUserFilter,authc,roles[user]
+				/personalNew.html=shiroLoginUserFilter,kickout,authc,roles[user]
+				<!-- 可以匿名访问 -->
+				/*New.html = kickout,anon
+				/user/basic/add*.do=kickout,shiroLoginUserFilter,authc,roles[user]
+				/user/personal/**=kickout,shiroLoginUserFilter,authc,roles[user]
+				<!-- 需要认证并且是管理角色 -->
+				/bloger.jsp=kickout,authc,roles[admin]
+				<!-- 需要认证并且是管理角色 -->
+				/bloger/**=kickout,shiroLoginAdminFilter,authc,roles[admin]
+				/login.jsp = kickout,anon
+				
 			</value>
 		</property>
 
 	</bean>
-
-
-<!-- 用于管理员未登录拦截 -->
-<bean id="shiroLoginAdminFilter" class="com.myblog.web.filter.ShiroLoginAdminFilter"></bean>
-<bean id="shiroLoginUserFilter" class="com.myblog.web.filter.ShiroLoginUserFilter"></bean>
+	<!-- 用户重复登陆拦截 -->
+	<bean id="kickoutSessionControlFilter" class="com.myblog.web.filter.KickoutSessionControlFilter">
+		<property name="cacheManager" ref="cacheManager" />
+		<property name="sessionManager" ref="sessionManager" />
+		<property name="kickoutAfter" value="false" />
+		<property name="maxSession" value="1" />
+		<property name="kickoutUrl" value="/WEB-INF/err/errUnPowerNew.jsp" />
+	</bean>
+	<!-- 用于管理员未登录拦截 -->
+	<bean id="shiroLoginAdminFilter" class="com.myblog.web.filter.ShiroLoginAdminFilter"></bean>
+	<!-- 用户未登录拦截 -->
+	<bean id="shiroLoginUserFilter" class="com.myblog.web.filter.ShiroLoginUserFilter"></bean>
 
 </beans>
 

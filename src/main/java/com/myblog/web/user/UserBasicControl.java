@@ -29,6 +29,7 @@ import com.myblog.dto.args.BlogCommend;
 import com.myblog.dto.args.SearchArtArg;
 import com.myblog.dto.user.MyArticleAll;
 import com.myblog.dto.user.MyUserArticle_title;
+import com.myblog.entity.Blog_web_record;
 import com.myblog.entity.rote.ReadRote;
 import com.myblog.entity.rote.UpvoteRote;
 import com.myblog.service.user.IUserArticleService;
@@ -36,6 +37,8 @@ import com.myblog.shiro.LoginType;
 import com.myblog.util.CusAccessObjectUtil;
 import com.myblog.util.LayuiDataUtil;
 import com.myblog.util.ReturnUtils;
+import com.myblog.util.WebRecordUtils;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import nl.bitwalker.useragentutils.Browser;
@@ -77,7 +80,8 @@ public class UserBasicControl {
 	public @ResponseBody String getArticleAll(@RequestParam("article_id")int article_id,HttpServletRequest request) {
 		MyArticleAll myArticleAll=userArticleService.getArticleAll(article_id);	            
 		if (myArticleAll!=null) {
-						userArticleService.addrtRead(new ReadRote(null, getUser(), CusAccessObjectUtil.getIpAddress(request), null, article_id));
+			Blog_web_record bl=WebRecordUtils.getAgent(request, getUser());
+						userArticleService.addrtRead(new ReadRote(null, getUser(), bl.getRecord_ip(), null, article_id,bl.getRecord_brow(),bl.getRecord_dervice()));
 					}
 		
 		return JSONObject.fromObject(myArticleAll).toString();

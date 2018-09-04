@@ -47,8 +47,6 @@ public class UserRealm extends AuthorizingRealm {
 			roles.add("user");
 			info = new SimpleAuthorizationInfo(roles);
 		}
-		
-		
 		return info;
 	}
 
