@@ -20,8 +20,9 @@
 		<property name="resolveLazily" value="true" />
 	</bean>
 
-	<context:component-scan base-package="com.myblog.web">
-	</context:component-scan>
+	<context:component-scan base-package="com.myblog.web"/>
+ 
+	 
        <!-- 注册异常处理器 -->
     <bean class="com.myblog.exception.ExceptionResolver"></bean>
 	<bean id="validator"
@@ -60,8 +61,10 @@
 		</mvc:message-converters>
 	</mvc:annotation-driven>
 
-
-
+ <!-- 开启aop注解方式,默认为false -->    
+ <context:component-scan base-package="com.myblog.log.aspect"/>
+       <aop:aspectj-autoproxy proxy-target-class="true"/> 
+   
 
 </beans>
 

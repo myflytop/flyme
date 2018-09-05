@@ -32,6 +32,7 @@ import com.myblog.dto.user.MyUserArticle_title;
 import com.myblog.entity.Blog_web_record;
 import com.myblog.entity.rote.ReadRote;
 import com.myblog.entity.rote.UpvoteRote;
+import com.myblog.log.aspect.Dolog;
 import com.myblog.service.user.IUserArticleService;
 import com.myblog.shiro.LoginType;
 import com.myblog.util.CusAccessObjectUtil;
@@ -76,6 +77,7 @@ public class UserBasicControl {
 		}
 		return JSONObject.fromObject(msortmap).toString();
 	}
+	
 	@RequestMapping(value = "/getArticleAll.do", produces = "text/html; charset=utf-8")
 	public @ResponseBody String getArticleAll(@RequestParam("article_id")int article_id,HttpServletRequest request) {
 		MyArticleAll myArticleAll=userArticleService.getArticleAll(article_id);	            
@@ -92,6 +94,7 @@ public class UserBasicControl {
 	 * @param se
 	 * @return
 	 */
+  @Dolog
 	@RequestMapping(value = "/getArticleTitles.do", produces = "text/html; charset=utf-8")
 	public @ResponseBody String getArticlelist(@RequestParam("page")int  page,@ModelAttribute("SearchArtArg")SearchArtArg se)  {
 		System.err.println(page);

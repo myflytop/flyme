@@ -15,7 +15,6 @@
 	<!-- 1. 配置 SecurityManager! 安全管理器配置 -->
 
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-
 		<!-- 自定义realm选择器 -->
 		<property name="authenticator" ref="authenticator"></property>
 		<!-- 可以配置多个Realm，其实会把realms属性赋值给ModularRealmAuthenticator的realms属性 -->
@@ -111,15 +110,17 @@
 		<!-- 配置session监听器 -->
 		<property name="sessionListeners" ref="recordFirst" />
 		<!-- 定义的是全局的session会话超时时间，此操作会覆盖web.xml文件中的超时时间配置 -->
-		<property name="globalSessionTimeout" value="1800000" />
+		<property name="globalSessionTimeout" value="3600000" />
+		<!-- 需要让此session可以使用该定时调度器进行检测 -->
+		<property name="sessionValidationSchedulerEnabled" value="true"/>
 		<!-- 定义要使用的无效的Session定时调度器 -->
 		<property name="sessionValidationScheduler" ref="sessionValidationScheduler" />
-		<!-- 需要让此session可以使用该定时调度器进行检测 -->
-		<property name="sessionValidationSchedulerEnabled" value="true" />
-		<property name="sessionDAO" ref="sessionDAO" />
-		<property name="sessionIdCookieEnabled" value="true" />
+		<!-- 定义Session可以进行序列化的工具类 -->
+		<property name="sessionDAO"    ref="sessionDAO" />
+		 <!-- 所有的session一定要将id设置到Cookie之中，需要提供有Cookie的操作模版 -->
 		<property name="sessionIdCookie" ref="sessionIdCookie" />
-		
+		 <!-- 定义sessionIdCookie模版可以进行操作的启用 -->
+		<property name="sessionIdCookieEnabled" value="true" />
 	</bean>
 	<!-- 配置session的定时验证检测程序类，以让无效的session释放 -->
 	<!-- Shiro也提供了使用Quartz会话验证调度器,org.apache.shiro.session.mgt.quartz.QuartzSessionValidationScheduler,使用时需要导入shiro-quartz依赖 -->
@@ -131,7 +132,7 @@
 		<property name="sessionManager" ref="sessionManager" />
 	</bean>
 	<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
-		<constructor-arg value="sid"/>
+		<property name="name" value="JSESSID" />
         <property name="httpOnly" value="true"/>
         <property name="maxAge" value="-1"/>
 	</bean>

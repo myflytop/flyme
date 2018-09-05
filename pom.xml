@@ -9,7 +9,7 @@
 	<url>http://maven.apache.org</url>
 	<properties>
 		<!--spring版本号 -->
-		<springframework.version>4.2.7.RELEASE</springframework.version>
+		<springframework.version>4.3.5.RELEASE</springframework.version>
 		<!-- mybatis版本号 -->
 		<mybatis.version>3.4.2</mybatis.version>
 		<!-- mybatis-spring版本号 -->
@@ -19,9 +19,9 @@
 		<!-- c3p0数据连接池版本号 -->
 		<c3p0.version>0.9.1.2</c3p0.version>
 		<!--aspectj版本号 -->
-		<aspectj.version>1.8.10</aspectj.version>
+		<aspectj.version>1.8.11</aspectj.version>
 		<!-- shiro版本号 -->
-		<shiro.version>1.2.5</shiro.version>
+		<shiro.version>1.3.2</shiro.version>
 		<!-- log4版本号 -->
 		<log4j.version>1.2.17</log4j.version>
 		<!-- slf4j版本号 -->
@@ -110,45 +110,38 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>${aspectj.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
 			<version>${aspectj.version}</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-core</artifactId>
-			<version>${shiro.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-web</artifactId>
-			<version>${shiro.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-spring</artifactId>
-			<version>${shiro.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-ehcache</artifactId>
-			<version>1.2.3</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-aspectj</artifactId>
-			<version>1.3.2</version>
-		</dependency>
-
+		 <!-- ehcache缓存框架 -->
+		 <dependency>    
+        <groupId>org.apache.shiro</groupId>    
+        <artifactId>shiro-core</artifactId>    
+        <version>${shiro.version}</version>    
+    </dependency>    
+    <dependency>    
+        <groupId>org.apache.shiro</groupId>    
+        <artifactId>shiro-web</artifactId>    
+        <version>${shiro.version}</version>    
+    </dependency>    
+    <dependency>    
+        <groupId>org.apache.shiro</groupId>    
+        <artifactId>shiro-ehcache</artifactId>    
+        <version>${shiro.version}</version>    
+    </dependency>    
+    <dependency>    
+        <groupId>org.apache.shiro</groupId>    
+        <artifactId>shiro-spring</artifactId>    
+        <version>${shiro.version}</version>    
+    </dependency> 
+		
 		<!-- shiro-quartz依赖 -->
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-quartz</artifactId>
-			<version>1.2.2</version>
+			<version>1.2.3</version>
 		</dependency>
 		<!--start 日誌 -->
 		<dependency>
